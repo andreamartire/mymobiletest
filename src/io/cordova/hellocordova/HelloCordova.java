@@ -34,7 +34,7 @@ public class HelloCordova extends CordovaActivity
         super.init();
         // Set by <content src="index.html" /> in config.xml
 //        super.loadUrl(Config.getStartUrl());
-        super.loadUrl("file:///android_asset/www/index2.html");
+        super.loadUrl("file:///android_asset/www/index.html");
     }
     
     @Override
