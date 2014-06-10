@@ -43,7 +43,7 @@ var app = {
 			tx.executeSql(sqlStr, [], onTxSuccess, onTxError);
     	};
     
-    	var db = window.openDatabase("slDB", "1.0", "Scrutinio Live", 3 * 1024 * 1024);//3mb
-    	db.transaction(createTable, onTxError, onTxSuccess);
+    	this.db = window.openDatabase("slDB", "1.0", "Scrutinio Live", 3 * 1024 * 1024);//3mb
+    	this.db.transaction(createTable, onTxError, onTxSuccess);
     }
 };
