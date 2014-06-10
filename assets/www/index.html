@@ -14,10 +14,15 @@
 		<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
-		
-		<script type="text/javascript" charset="utf-8" src="js/app/init.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.external-png-1.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons-1.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-png-1.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-svg-1.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.4.2.min.css" />
+
 	</head>
-	<body onload="onBodyLoad()">
+	<body>
 	
 		<!-- Main Page -->
 		<div data-role="page">
@@ -40,8 +45,40 @@
 				<h1>Elezioni</h1>
 			</div>
 			<div data-role="content">
-				<a href="#" data-role="button">Aggiungi Elezione</a>
+				<a href="#aggiungiElezione" data-role="button">Aggiungi Elezione</a>
 				<a href="index.html" data-rel="back">back</a>
+			</div>
+			<div data-role="footer">
+				<h1>PhoneGap Essentials</h1>
+			</div>
+		</div>
+		
+		<div data-role="page" id='aggiungiElezione'>
+			<div data-role="header">
+				<h1>Aggiungi Elezione</h1>
+			</div>
+			<div data-role="content">
+				<form action="#" method="post" id="form_elezione" >
+					<fieldset data-role="fieldcontain">
+					
+						<label for="elezione_tipologia">Tipologia</label>
+						<select name="tipologia" id="elezione_tipologia">
+							<option></option>
+							<option value="politiche">Politiche</option>
+							<option value="regionali">Regionali</option>
+							<option value="provinciali">Provinciali</option>
+							<option value="amministrative">Amministrative</option>
+							<option value="referendum">Referendum</option>
+						</select>
+						
+						<label for="elezione_data">Data</label>
+						<input type="date" name="data" id="elezione_data" placeholder="Data"/>
+						
+						<label for="elezione_note">Note</label>
+						<textarea name="note" id="elezione_note"></textarea>
+						
+					</fieldset>
+				</form>
 			</div>
 			<div data-role="footer">
 				<h1>PhoneGap Essentials</h1>
@@ -68,62 +105,16 @@
 			</div>
 			<div data-role="content">
 				<a href="#" data-role="button">Visualizza Info</a>
-				<!-- due colonne -->
-				<div class="ui-grid-a"> 
-				    <div class="ui-block-a">Primo blocco</div> 
-				    <div class="ui-block-b">Secondo blocco</div> 
-				</div> 
-				 
-				<!-- cinque colonne -->
-				<div class="ui-grid-d"> 
-				    <div class="ui-block-a">Primo blocco</div> 
-				    <div class="ui-block-b">Secondo blocco</div> 
-				    <div class="ui-block-c">Terzo blocco</div> 
-				    <div class="ui-block-d">Quarto blocco</div> 
-				    <div class="ui-block-e">Quinto blocco</div> 
-				</div>
-				<div data-role="collapsible">
-				   <h3>Questo è il testo visibile e cliccabile</h3>
-				   <p>Contenuto collassato di default e visibile su richiesta.</p>
-				</div>
-				
-				<!-- contenitore collassabile -->
-				<div data-role="collapsible">
-				   <h3>Questo è il testo visibile e cliccabile</h3>
-				 
-				    <!-- contenuto collassabile innestato -->
-				    <div data-role="collapsible">
-				       <h3>Primo paragrafo collassabile</h3>
-				       <p>Contenuto collassato di default e visibile su richiesta.</p>
-				    </div>
-				 
-				    <!-- contenuto collassabile innestato -->
-				    <div data-role="collapsible">
-				       <h3>Secondo paragrafo collassabile</h3>
-				       <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
-				    </div>
-				</div>
-				
-				<div data-role="collapsible-set">
- 
-				    <!-- contenuto accordion -->
-				    <div data-role="collapsible" data-collapsed="false">
-				       <h3>Primo pannello accordion</h3>
-				       <p>Contenuto collassato di default e visibile su richiesta.</p>
-				    </div>
-				 
-				    <!-- contenuto accodion -->
-				    <div data-role="collapsible">
-				       <h3>Secondo pannello accordion</h3>
-				       <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
-				    </div>
-				 
-				</div>
-				<a href="index.html" data-rel="back">back</a>
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<h1>PhoneGap Essentials</h1>
 			</div>
 		</div>
+		
+		<script type="text/javascript" src="js/app/init.js"></script>
+		<script type="text/javascript">
+            app.initialize();
+        </script>
+		
 	</body>
 </html>

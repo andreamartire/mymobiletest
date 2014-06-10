@@ -17,7 +17,7 @@
        under the License.
  */
 
-package io.cordova.hellocordova;
+package scrutinio.main;
 
 import java.io.File;
 
@@ -25,7 +25,7 @@ import android.content.Context;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class HelloCordova extends CordovaActivity 
+public class ScrutinioLive extends CordovaActivity 
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -33,7 +33,6 @@ public class HelloCordova extends CordovaActivity
         super.onCreate(savedInstanceState);
         super.init();
         // Set by <content src="index.html" /> in config.xml
-//        super.loadUrl(Config.getStartUrl());
         super.loadUrl("file:///android_asset/www/index.html");
     }
     
