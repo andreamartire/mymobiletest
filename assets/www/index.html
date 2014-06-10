@@ -48,7 +48,7 @@
 			</div>
 			<div data-role="content">
 				<a href="#aggiungiElezione" data-role="button">Aggiungi Elezione</a>
-				<a href="index.html" data-rel="back">back</a>
+				<div id="elezioniList"></div>
 			</div>
 			<div data-role="footer">
 				<h1>PhoneGap Essentials</h1>
@@ -60,7 +60,7 @@
 				<h1>Aggiungi Elezione</h1>
 			</div>
 			<div data-role="content">
-				<form action="#" method="post" id="form_elezione" >
+				<form onsubmit="return election.save();" method="post" id="form_elezione" >
 					<fieldset data-role="fieldcontain">
 					
 						<label for="elezione_tipologia">Tipologia</label>
@@ -79,6 +79,8 @@
 						<label for="elezione_note">Note</label>
 						<textarea name="note" id="elezione_note"></textarea>
 						
+						<input type="submit" data-theme="b" name="submit" id="submit" value="Submit">
+						
 					</fieldset>
 				</form>
 			</div>
@@ -94,7 +96,6 @@
 			</div>
 			<div data-role="content">
 				<a href="#" data-role="button">Esegui Scrutinio</a>
-				<a href="index.html" data-rel="back">back</a>
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<h1>PhoneGap Essentials</h1>
@@ -115,6 +116,7 @@
 		
 		<script type="text/javascript">
             app.initialize();
+            election.initialize();
         </script>
 		
 	</body>
