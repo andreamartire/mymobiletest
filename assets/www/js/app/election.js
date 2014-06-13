@@ -4,6 +4,13 @@ var election = {
         	election.list();
         });
         
+        $( document ).on( "pagebeforeshow", "#elezionePage", function (event, data) {
+        	var id = $(this).data("url").split("?")[1];
+        	navigator.notification.alert(utils.stringify($(this), 0, 3));
+            id = id.replace("id=","");
+            navigator.notification.alert(id);
+        });
+        
         $( document ).on( "pagebeforeshow", "#aggiungiElezione", function() {
         	$('#form_elezione').each(function() { this.reset(); });
         });
@@ -12,7 +19,7 @@ var election = {
     	var tipologia = $('#elezione_tipologia').val();
     	var dataElezione = new Date(Date.parse($('#elezione_data').val()));
     	if(!utils.isValidDate(dataElezione)){
-    		dataElezione = new Date(Date.parse('01/01/1970'));
+    		dataElezione = new Date();
     	}
     	var note = $('#elezione_note').val();
     	var query = 'INSERT INTO ELEZIONE(tipologia, data, note) VALUES("' + tipologia + '", ' + dataElezione.getTime() + ', "' + note + '")';
@@ -36,7 +43,7 @@ var election = {
     		
 			if (results.rows) {
 				
-				console.log("Rows: " + results.rows);
+				//console.log("Rows: " + results.rows);
 				var len = results.rows.length;
 				if (len > 0) {
 					var html = "<ul data-role=\"listview\">";
@@ -56,13 +63,16 @@ var election = {
 						var tipologia = results.rows.item(i).tipologia;
 						var note = results.rows.item(i).note;
 						
-						console.log('Election: ' + tipologia + "-" + data + "-" + note);
+						//console.log('Election: ' + tipologia + "-" + data + "-" + note);
 						
-						html += "<li><a href=\"#\">" + tipologia + " " + day+"/"+month+"/"+year + " " + note;
-//						html += "<div class=\"ui-block-d\">" +
-//							"<input type=\"button\" name=\"Remove\" onclick=\"return election.remove(" + id + ")\">" +
-//						"</div>";
-						html += "</a></li>";
+						html += "<li>" +
+									"<a href=\"#elezionePage?id=" + id +  "\" data-ajax=\"false\">" + 
+										id + " " + 
+										tipologia + " " + 
+										day+"/"+month+"/"+year + " " + 
+										note + 
+									"</a>" +
+								"</li>";
 					}
 					html += "</ul>";
 					// Use JQuery's $() to assign the content to the page
