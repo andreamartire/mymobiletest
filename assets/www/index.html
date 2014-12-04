@@ -7,124 +7,27 @@
 		<title>Scrutinio Live</title>
 		
 		<!--  Cordova -->
-		<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/cordova_plugins.js"></script>
+<!-- 		<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script> -->
+<!-- 		<script type="text/javascript" charset="utf-8" src="js/cordova_plugins.js"></script> -->
 		
-		<!--  Jquery + Jquery Mobile -->
-		<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.2.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.css" />
-		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.4.2.css" />
-
-		<script type="text/javascript" src="js/app/app.js"></script>
-		<script type="text/javascript" src="js/app/utils.js"></script>
-		<script type="text/javascript" src="js/app/election.js"></script>
+		<!--  Sencha Touch -->
+		<link rel="stylesheet" href="js/sencha-touch-2.1.0/resources/css/sencha-touch.css" type="text/css">
+		<script type="text/javascript" src="js/sencha-touch-2.1.0/sencha-touch-debug.js"></script>
+		<script type="text/javascript"></script>
 	</head>
 	<body>
-	
-		<!-- Main Page -->
-		<div data-role="page">
-			<div data-role="header" data-position="fixed">
-				<h1>Menu</h1>
-			</div>
-			<div data-role="content">
-				<div data-role="controlgroup">
-					<a href="#elezioniPage" data-role="button">Elezioni</a>
-					<a href="#scrutinioPage" data-role="button">Scrutinio Live</a>
-					<a href="#guidaPage" data-role="button">Guida RdL</a>
-					<a href="credits.html" data-rel="dialog">Credits</a>
-				</div>
-			</div>
-		</div>
-		
-		<!-- Elezioni -->
-		<div data-role="page" id='elezioniPage'>
-			<div data-role="header" data-position="fixed">
-				<h1>Elezioni</h1>
-			</div>
-			<div id="elezioniList">
-				
-			</div>
-			<a href="#aggiungiElezione" data-role="button">Aggiungi Elezione</a>
-			<div data-role="footer" data-position="fixed">
-				<h1>PhoneGap Essentials</h1>
-			</div>
-		</div>
-		
-		<div data-role="page" id='elezionePage'>
-			<div data-role="header" data-position="fixed">
-				<h1>Dettaglio Elezione</h1>
-			</div>
-			<div data-role="content">
-			</div>
-			<div data-role="footer" data-position="fixed">
-				<h1>PhoneGap Essentials</h1>
-			</div>
-		</div>
-		
-		<div data-role="page" id='aggiungiElezione'>
-			<div data-role="header" data-position="fixed">
-				<h1>Aggiungi Elezione</h1>
-			</div>
-			<div data-role="content">
-				<form onsubmit="return election.save();" method="post" id="form_elezione" >
-					<fieldset data-role="fieldcontain">
-					
-						<label for="elezione_tipologia">Tipologia</label>
-						<select name="tipologia" id="elezione_tipologia">
-							<option></option>
-							<option value="politiche">Politiche</option>
-							<option value="regionali">Regionali</option>
-							<option value="provinciali">Provinciali</option>
-							<option value="amministrative">Amministrative</option>
-							<option value="referendum">Referendum</option>
-						</select>
-						
-						<label for="elezione_data">Data</label>
-						<input type="date" name="data" id="elezione_data" placeholder="Data"/>
-						
-						<label for="elezione_note">Note</label>
-						<textarea name="note" id="elezione_note"></textarea>
-						
-						<input type="submit" data-theme="b" name="submit" id="submit" value="Submit">
-						
-					</fieldset>
-				</form>
-			</div>
-			<div data-role="footer" data-position="fixed">
-				<h1>PhoneGap Essentials</h1>
-			</div>
-		</div>
-
-		<!-- Scrutinio -->
-		<div data-role="page" id='scrutinioPage'>
-			<div data-role="header" data-position="fixed">
-				<h1>Menu</h1>
-			</div>
-			<div data-role="content">
-				<a href="#" data-role="button">Esegui Scrutinio</a>
-			</div>
-			<div data-role="footer" data-position="fixed">
-				<h1>PhoneGap Essentials</h1>
-			</div>
-		</div>
-		
-		<div data-role="page" id='guidaPage'>
-			<div data-role="header" data-position="fixed">
-				<h1>Guida</h1>
-			</div>
-			<div data-role="content">
-				<a href="#" data-role="button">Visualizza Info</a>
-			</div>
-			<div data-role="footer" data-position="fixed">
-				<h1>PhoneGap Essentials</h1>
-			</div>
-		</div>
-		
+			
 		<script type="text/javascript">
-            app.initialize();
-            election.initialize();
-        </script>
+			Ext.require('Ext.MessageBox');
+			Ext.application({
+				launch : function() {
+					Ext.Msg.alert(
+						'Hello!',
+						'Hello there from Sencha Touch!'
+					);
+				}
+			});
+		</script>
 		
 	</body>
 </html>

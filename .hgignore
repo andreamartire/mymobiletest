@@ -1,0 +1,17 @@
+
+syntax: regexp
+^assets/www/js/sencha-touch-2\.1\.0/docs$
+syntax: regexp
+^assets/www/js/sencha-touch-2\.1\.0/examples$
+syntax: regexp
+^assets/www/js/sencha-touch-2\.1\.0/microloader$
+syntax: regexp
+^assets/www/js/sencha-touch-2\.1\.0/src$
+syntax: regexp
+^assets/www/js/sencha-touch-2\.1\.0/getting-started\.html$
+syntax: regexp
+^other$
+syntax: regexp
+^bin/ScrutinioLive\.apk$
+syntax: regexp
+^bin/resources\.ap_$
