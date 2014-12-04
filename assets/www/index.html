@@ -1,8 +1,6 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		
-		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
 		<title>Scrutinio Live</title>
 		
@@ -11,20 +9,39 @@
 <!-- 		<script type="text/javascript" charset="utf-8" src="js/cordova_plugins.js"></script> -->
 		
 		<!--  Sencha Touch -->
-		<link rel="stylesheet" href="js/sencha-touch-2.1.0/resources/css/sencha-touch.css" type="text/css">
-		<script type="text/javascript" src="js/sencha-touch-2.1.0/sencha-touch-debug.js"></script>
+		<link rel="stylesheet" href="js/sencha-touch-2.4/resources/css/sencha-touch.css" type="text/css">
+		<script type="text/javascript" src="js/sencha-touch-2.4/sencha-touch-debug.js"></script>
 		<script type="text/javascript"></script>
 	</head>
 	<body>
 			
 		<script type="text/javascript">
-			Ext.require('Ext.MessageBox');
+			/*Ext.require('Ext.MessageBox');
 			Ext.application({
 				launch : function() {
 					Ext.Msg.alert(
 						'Hello!',
 						'Hello there from Sencha Touch!'
 					);
+				}
+			});*/
+
+			Ext.Loader.setConfig({
+				enabled : true,
+				paths : {
+					MyApp : 'MyApp'
+				}
+			});
+			
+			Ext.require([
+				'MyApp.MainContainer'
+			]);
+			
+			Ext.application({
+				launch : function () {
+					Ext.create('MyApp.MainContainer', {
+						fullscreen : false
+					})
 				}
 			});
 		</script>
