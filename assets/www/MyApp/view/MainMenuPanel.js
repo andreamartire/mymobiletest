@@ -1,9 +1,21 @@
-Ext.define('MyApp.view.Step1Panel', {
+Ext.define('MyApp.view.MainMenuPanel', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.step1',
+    alias: 'widget.mainMenuPanel',
 
     config: {
         items: [
+			{
+				id: 'electionButtonId',
+			    xtype: 'button',
+			    ui: 'forward',
+			    text: 'Elezioni'
+			},
+			{
+				id: 'creditsButtonId',
+			    xtype: 'button',
+			    ui: 'forward',
+			    text: 'Credits'
+			},
             {
                 xtype: 'fieldset',
                 title: 'Enter a number',
@@ -15,6 +27,7 @@ Ext.define('MyApp.view.Step1Panel', {
                 ]
             },
             {
+            	id: 'nextButtonId',
                 xtype: 'button',
                 ui: 'forward',
                 text: 'Next'

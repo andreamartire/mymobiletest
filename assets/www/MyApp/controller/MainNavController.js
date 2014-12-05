@@ -7,7 +7,13 @@ Ext.define('MyApp.controller.MainNavController', {
 
     config: {
         control: {
-            "step1 button": {
+            "mainMenuPanel #electionButtonId": {
+                tap: 'electionListTap'
+            },
+            "mainMenuPanel #creditsButtonId": {
+                tap: 'creditsTap'
+            },
+            "mainMenuPanel #nextButtonId": {
                 tap: 'onStep1SubmitTap'
             },
             "step2 button": {
@@ -19,6 +25,17 @@ Ext.define('MyApp.controller.MainNavController', {
         }
     },
 
+    electionListTap: function(button, e, eOpts) {
+        button.up('navigationview').push({
+            xtype: 'electionList',
+            title: 'Elezioni'
+        });
+    },
+    
+    creditsTap: function(button, e, eOpts) {
+    	Ext.Msg.alert('Credits', 'Copyright &copy; 2014, Andrea Martire. All Rights Reserved');
+    },
+    
     onStep1SubmitTap: function(button, e, eOpts) {
         button.up('navigationview').push({
             xtype: 'step2',
@@ -35,7 +52,7 @@ Ext.define('MyApp.controller.MainNavController', {
 
     onStep3ButtonTap: function(button, e, eOpts) {
         var mainNav = button.up('navigationview'),
-            num1 = mainNav.child('step1').getValues().number1,
+            num1 = mainNav.child('mainMenuPanel').getValues().number1,
             num2 = mainNav.child('step2').getValues().number2,
             operation = mainNav.child('step3').getValues().operation,
             result;
@@ -52,6 +69,9 @@ Ext.define('MyApp.controller.MainNavController', {
                 break;
             case 'divide':
                 result = num1 / num2;
+                break;
+            default:
+            	result = 'ERROR';
                 break;
         }
 

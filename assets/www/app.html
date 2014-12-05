@@ -16,9 +16,18 @@
 	});
 	Ext.require([ 'MyApp.ElectionContainer' ]);
 	Ext.application({
-		controllers: ['MyApp.controller.MainNavController'],
+		controllers: [
+		    'MyApp.controller.MainNavController'
+		],
+		models: [
+			'MyApp.model.ElectionModel'
+		],
+		stores: [
+			'MyApp.store.ElectionStore'
+		],
 		views: [
-		    'MyApp.view.Step1Panel',
+		    'MyApp.view.MainMenuPanel',
+		    'MyApp.view.ElectionListPanel',
 		    'MyApp.view.Step2Panel',
 		    'MyApp.view.Step3Panel'
 		],
