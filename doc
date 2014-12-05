@@ -1,0 +1,22 @@
+Elezioni
+	Sezioni
+		Aggiungi Sezione
+			Anno
+			Tipologia
+				Amministrative - Scegli Comune
+				Regionali - Scegli Regione
+				Politiche
+				Europee
+				Referendum
+			Preferenze?
+				Voto Disgiunto?
+		Elenco Sezioni
+			Modifica/Elimina Sezione
+	Liste Candidati
+		Aggiungi Lista
+		Elenco Liste
+			Modifica/Elimina Lista
+				Modifica Informazioni
+				Lista Candidati
+	Statistiche
+Credits
