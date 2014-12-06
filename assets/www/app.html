@@ -20,7 +20,8 @@
 		    'MyApp.controller.MainNavController'
 		],
 		models: [
-			'MyApp.model.ElectionModel'
+			'MyApp.model.ElectionModel',
+			'MyApp.model.SectionModel'
 		],
 		stores: [
 			'MyApp.store.ElectionStore'
@@ -29,8 +30,7 @@
 		    'MyApp.view.MainMenuPanel',
 		    'MyApp.view.ElectionListPanel',
 		    'MyApp.view.AddElectionPanel',
-		    'MyApp.view.Step2Panel',
-		    'MyApp.view.Step3Panel'
+		    'MyApp.view.SectionListPanel'
 		],
 		launch : function() {
 			Ext.create('MyApp.ElectionContainer', {

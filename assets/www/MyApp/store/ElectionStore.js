@@ -18,5 +18,3 @@ Ext.define('MyApp.store.ElectionStore', {
         },
 	}
 });
-
-Ext.create('MyApp.store.ElectionStore');

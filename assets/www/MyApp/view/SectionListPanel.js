@@ -1,9 +1,7 @@
-Ext.namespace('MyApp.ElectionListPanel');
-
-MyApp.ElectionListPanel = Ext.define('MyApp.view.ElectionListPanel', {
+Ext.define('MyApp.view.SectionListPanel', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.electionList',
-    requires: ['MyApp.store.ElectionStore'],
+    alias: 'widget.sectionList',
+    requires: ['MyApp.store.SectionStore'],
     config: {
     	scrollable: false
     },
@@ -16,18 +14,18 @@ MyApp.ElectionListPanel = Ext.define('MyApp.view.ElectionListPanel', {
 				height: 300,
 				itemTpl: '<div class="contact">{type} - {date:date("d/m/Y")} - {city}  - {note}</div>',
 			    store: {
-			    	type : 'electionstore'
+			    	type : 'sectionstore'
 			    },
 			    onItemDisclosure: function(record, btn, index){
-			    	record.fireEvent('itemtap',record, btn, index);
+			    	Ext.Msg.alert('Tap', 'Click');
 			    }
 			},
 			{
 			    xtype: 'button',
-			    text: 'Aggiungi Elezione'
+			    text: 'Aggiungi Sezione'
 			}
         ]);
-
+    	
     	me.callParent(arguments);
     }
 });

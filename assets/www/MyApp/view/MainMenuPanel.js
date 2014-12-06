@@ -3,6 +3,7 @@ Ext.define('MyApp.view.MainMenuPanel', {
     alias: 'widget.mainMenuPanel',
 
     config: {
+    	scrollable : false,
         items: [
 			{
 				id: 'electionButtonId',
@@ -10,27 +11,17 @@ Ext.define('MyApp.view.MainMenuPanel', {
 			    text: 'Elezioni'
 			},
 			{
+				xtype : 'list',
+				height: 300,
+				itemTpl: '<div class="contact">{type} <strong>{date}</strong></div>',
+			    store: 'ElectionStore',
+			    grouped: true
+			},
+			{
 				id: 'creditsButtonId',
 			    xtype: 'button',
 			    text: 'Credits'
-			},
-            {
-                xtype: 'fieldset',
-                title: 'Enter a number',
-                items: [
-                    {
-                        xtype: 'numberfield',
-                        name: 'number1'
-                    }
-                ]
-            },
-            {
-            	id: 'nextButtonId',
-                xtype: 'button',
-                ui: 'forward',
-                text: 'Next'
-            }
+			}
         ]
     }
-
 });

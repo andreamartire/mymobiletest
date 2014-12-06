@@ -16,17 +16,11 @@ Ext.define('MyApp.controller.MainNavController', {
             "electionList button": {
                 tap: 'addElectionTap'
             },
+            "electionList dataview": {
+            	itemtap : 'electionTap'
+            },
             "addElection button": {
                 tap: 'saveElectionTap'
-            },
-            "mainMenuPanel #nextButtonId": {
-                tap: 'onStep1SubmitTap'
-            },
-            "step2 button": {
-                tap: 'onStep2ButtonTap'
-            },
-            "step3 button": {
-                tap: 'onStep3ButtonTap'
             }
         }
     },
@@ -73,49 +67,17 @@ Ext.define('MyApp.controller.MainNavController', {
 	       var electionStore = Ext.getStore('electionstore');
 	       electionStore.add(election);
 	       electionStore.sync();
+	       electionStore.load();
 	       Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
+	       //redirect to election list
+	       button.up('navigationview').pop();
 	    }
     },
     
-    onStep1SubmitTap: function(button, e, eOpts) {
-        button.up('navigationview').push({
-            xtype: 'step2',
-            title: 'Step 2'
+    electionTap: function(button, e, eOpts) {
+    	button.up('navigationview').push({
+            xtype: 'sectionList',
+            title: 'Elezione'
         });
-    },
-
-    onStep2ButtonTap: function(button, e, eOpts) {
-        button.up('navigationview').push({
-            xtype: 'step3',
-            title: 'Step 3'
-        });
-    },
-
-    onStep3ButtonTap: function(button, e, eOpts) {
-        var mainNav = button.up('navigationview'),
-            num1 = mainNav.child('mainMenuPanel').getValues().number1,
-            num2 = mainNav.child('step2').getValues().number2,
-            operation = mainNav.child('step3').getValues().operation,
-            result;
-
-        switch (operation) {
-            case 'add':
-                result = num1 + num2;
-                break;
-            case 'subtract':
-                result = num1 - num2;
-                break;
-            case 'multiply':
-                result = num1 * num2;
-                break;
-            case 'divide':
-                result = num1 / num2;
-                break;
-            default:
-            	result = 'ERROR';
-                break;
-        }
-
-        Ext.Msg.alert('Your result is: ' + result);
     }
 });

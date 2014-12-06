@@ -22,23 +22,23 @@ Ext.define('MyApp.view.AddElectionPanel', {
                     options: [
 						{
 							  text: 'Amministrative',
-							  value: 'amministrative'
+							  value: 'Amministrative'
 						},
 						{
 							  text: 'Regionali',
-							  value: 'regionali'
+							  value: 'Regionali'
 						},
 						{
 							  text: 'Politiche',
-							  value: 'politiche'
+							  value: 'Politiche'
 						},
 						{
 							  text: 'Europee',
-							  value: 'europee'
+							  value: 'Europee'
 						},
 						{
 							  text: 'Referendum',
-							  value: 'referendum'
+							  value: 'Referendum'
 						}
                     ]
                 },
