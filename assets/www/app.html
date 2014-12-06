@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>ScrutinioLive</title>
-<link rel="stylesheet" href="js/sencha-touch-2.4/resources/css/sencha-touch.css" type="text/css">
-<script type="text/javascript"	src="js/sencha-touch-2.4/sencha-touch-all-debug.js">
-	
-</script>
-<script type='text/javascript'>
-	Ext.Loader.setConfig({
-		enabled : true,
-		paths : {
-			MyApp : 'MyApp'
-		}
-	});
-	Ext.require([ 'MyApp.ElectionContainer' ]);
-	Ext.application({
-		controllers: [
-		    'MyApp.controller.MainNavController'
-		],
-		models: [
-			'MyApp.model.ElectionModel',
-			'MyApp.model.SectionModel'
-		],
-		stores: [
-			'MyApp.store.ElectionStore'
-		],
-		views: [
-		    'MyApp.view.MainMenuPanel',
-		    'MyApp.view.ElectionListPanel',
-		    'MyApp.view.AddElectionPanel',
-		    'MyApp.view.SectionListPanel'
-		],
-		launch : function() {
-			Ext.create('MyApp.ElectionContainer', {
-				fullscreen : true
-			})
-		}
-	});
-</script>
-</head>
-<body>
-</body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<title>ScrutinioLive</title>
+		
+		<link rel="stylesheet" href="js/sencha-touch-2.4/resources/css/sencha-touch.css" type="text/css">
+		<script type="text/javascript"	src="js/sencha-touch-2.4/sencha-touch-all-debug.js">
+			
+		</script>
+		<script type='text/javascript'>
+			Ext.Loader.setConfig({
+				enabled : true,
+				paths : {
+					MyApp : 'MyApp'
+				}
+			});
+			
+			Ext.require([ 'MyApp.ElectionContainer']);
+			
+			Ext.application({
+				controllers: [
+				    'MyApp.controller.MainNavController'
+				],
+				models: [
+					'MyApp.model.ElectionModel',
+					'MyApp.model.SectionModel'
+				],
+				stores: [
+					'MyApp.store.ElectionStore',
+					'MyApp.store.SectionStore'
+				],
+				views: [
+				    'MyApp.view.MainMenuPanel',
+				    'MyApp.view.ElectionListPanel',
+				    'MyApp.view.AddElectionPanel',
+				    'MyApp.view.SectionListPanel',
+				    'MyApp.view.AddSectionPanel'
+				],
+				launch : function() {
+					Ext.create('MyApp.ElectionContainer', {
+						fullscreen : true
+					})
+				}
+			});
+		</script>
+	</head>
+	<body>
+	</body>
 </html>

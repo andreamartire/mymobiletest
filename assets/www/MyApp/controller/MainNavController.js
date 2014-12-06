@@ -21,6 +21,12 @@ Ext.define('MyApp.controller.MainNavController', {
             },
             "addElection button": {
                 tap: 'saveElectionTap'
+            },
+            "sectionList button": {
+                tap: 'addSectionTap'
+            },
+            "addSection button": {
+                tap: 'saveSectionTap'
             }
         }
     },
@@ -74,10 +80,52 @@ Ext.define('MyApp.controller.MainNavController', {
 	    }
     },
     
-    electionTap: function(button, e, eOpts) {
+    electionTap: function(button, index, target, record, e, eOpts ){
+    	var sectionStore = Ext.getStore('sectionstore');
+	    sectionStore.load();
+	    sectionStore.filter({property: "electionId", value: record.data.id});
+	       
     	button.up('navigationview').push({
             xtype: 'sectionList',
-            title: 'Elezione'
+            title: 'Elezione',
+            electionId: record.data.id
         });
+    },
+    
+    addSectionTap: function(button, e, eOpts) {
+    	button.up('navigationview').push({
+            xtype: 'addSection',
+            title: 'Aggiungi Sezione'
+        });
+    },
+    
+    saveSectionTap: function(button, e, eOpts) {
+    	var form = button.getParent().getParent();
+	    var formData = form.getValues();
+	     
+	    var section = Ext.create('MyApp.model.SectionModel',{
+	         number: formData.number,
+	         note: formData.note,
+	         electionId: 1
+	    });
+	     
+	    var errs = section.validate();
+	    
+	    if (!errs.isValid()) {
+	    	var msg = '';
+	    	errs.each(function (err) {
+	    		msg += err.getField() + ' : ' + err.getMessage() + '';
+	    	});
+	    	
+	    	Ext.Msg.alert('ERROR', msg);
+	    } else {
+	       var sectionStore = Ext.getStore('sectionstore');
+	       sectionStore.add(section);
+	       sectionStore.sync();
+	       sectionStore.load();
+	       Ext.Msg.alert('SUCCESS', 'Sezione salvata con Successo');
+	       //redirect to section list
+	       button.up('navigationview').pop();
+	    }
     }
 });

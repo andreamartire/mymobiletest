@@ -1,7 +1,6 @@
 Ext.define('MyApp.store.SectionStore', {
 	extend : 'Ext.data.Store',
 	alias : 'store.sectionstore',
-	autoLoad: true,
 	config: {
 		autoLoad: true,
 		model : 'MyApp.model.SectionModel',

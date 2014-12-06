@@ -12,7 +12,7 @@ Ext.define('MyApp.view.SectionListPanel', {
 			{
 				xtype : 'list',
 				height: 300,
-				itemTpl: '<div class="contact">{type} - {date:date("d/m/Y")} - {city}  - {note}</div>',
+				itemTpl: '<div class="contact">Sezione N&deg; {number} {note}</div>',
 			    store: {
 			    	type : 'sectionstore'
 			    },
