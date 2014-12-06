@@ -1,17 +1,22 @@
 Ext.define('MyApp.store.ElectionStore', {
 	extend : 'Ext.data.Store',
 	alias : 'store.electionstore',
+	autoLoad: true,
 	config: {
 		autoLoad: true,
-		model : 'MyApp.model.ElectionModel'
+		model : 'MyApp.model.ElectionModel',
+        storeId: 'electionstore',
+        proxy: {
+            type: 'localstorage',
+            id: 'electionstoreproxy'
+        },
+        sorters: 'date',
+        grouper: {
+            groupFn: function(record) {
+                return record.get('date')[0];
+            }
+        },
 	}
 });
 
-Ext.create('MyApp.store.ElectionStore', {
-    model: 'MyApp.model.ElectionModel',
-    data: [
-        { type: 'Amministrative', date: '2014' },
-        { type: 'Europee', date: '2013' },
-        { type: 'Politiche', date: '2012' }
-    ]
-});
+Ext.create('MyApp.store.ElectionStore');

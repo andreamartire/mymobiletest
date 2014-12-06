@@ -13,6 +13,12 @@ Ext.define('MyApp.controller.MainNavController', {
             "mainMenuPanel #creditsButtonId": {
                 tap: 'creditsTap'
             },
+            "electionList button": {
+                tap: 'addElectionTap'
+            },
+            "addElection button": {
+                tap: 'saveElectionTap'
+            },
             "mainMenuPanel #nextButtonId": {
                 tap: 'onStep1SubmitTap'
             },
@@ -34,6 +40,41 @@ Ext.define('MyApp.controller.MainNavController', {
     
     creditsTap: function(button, e, eOpts) {
     	Ext.Msg.alert('Credits', 'Copyright &copy; 2014, Andrea Martire. All Rights Reserved');
+    },
+
+    addElectionTap: function(button, e, eOpts) {
+    	button.up('navigationview').push({
+            xtype: 'addElection',
+            title: 'Aggiungi Elezione'
+        });
+    },
+    
+    saveElectionTap: function(button, e, eOpts) {
+    	var form = button.getParent().getParent();
+	    var formData = form.getValues();
+	     
+	    var election = Ext.create('MyApp.model.ElectionModel',{
+	         date: formData.date,
+	         type: formData.type,
+	         city: formData.city,
+	         note: formData.note
+	    });
+	     
+	    var errs = election.validate();
+	     
+	    if (!errs.isValid()) {
+	    	var msg = '';
+	    	errs.each(function (err) {
+	    		msg += err.getField() + ' : ' + err.getMessage() + '';
+	    	});
+	    	
+	    	Ext.Msg.alert('ERROR', msg);
+	    } else {
+	       var electionStore = Ext.getStore('electionstore');
+	       electionStore.add(election);
+	       electionStore.sync();
+	       Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
+	    }
     },
     
     onStep1SubmitTap: function(button, e, eOpts) {
@@ -77,5 +118,4 @@ Ext.define('MyApp.controller.MainNavController', {
 
         Ext.Msg.alert('Your result is: ' + result);
     }
-
 });

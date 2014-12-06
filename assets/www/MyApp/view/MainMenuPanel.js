@@ -7,13 +7,11 @@ Ext.define('MyApp.view.MainMenuPanel', {
 			{
 				id: 'electionButtonId',
 			    xtype: 'button',
-			    ui: 'forward',
 			    text: 'Elezioni'
 			},
 			{
 				id: 'creditsButtonId',
 			    xtype: 'button',
-			    ui: 'forward',
 			    text: 'Credits'
 			},
             {
