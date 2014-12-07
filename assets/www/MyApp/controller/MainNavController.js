@@ -82,14 +82,19 @@ Ext.define('MyApp.controller.MainNavController', {
     
     electionTap: function(button, index, target, record, e, eOpts ){
     	var sectionStore = Ext.getStore('sectionstore');
-    	sectionStore.clearFilter(true);
-	    sectionStore.load();
-	    sectionStore.filter("electionId", record.data.id);
+    	sectionStore.clearFilter();
+    	sectionStore.load();
+    	
+    	var electionId = record.data.id;
+	    sectionStore.filterBy(function(record){
+	    	return record.data.electionId == electionId;
+	    });
 	       
     	button.up('navigationview').push({
             xtype: 'sectionList',
             title: 'Elezione',
-            electionId: record.data.id
+            store: sectionStore,
+            electionId: electionId
         });
     },
     

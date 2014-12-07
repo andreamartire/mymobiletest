@@ -5,7 +5,7 @@ Ext.define('MyApp.view.SectionListPanel', {
     config: {
     	scrollable: false
     },
-    initialize: function(){
+    initialize: function(config){
     	var me = this;
     	
     	me.setItems([
@@ -13,9 +13,7 @@ Ext.define('MyApp.view.SectionListPanel', {
 				xtype : 'list',
 				height: 300,
 				itemTpl: '<div class="contact">Sezione N&deg; {number} {note}</div>',
-			    store: {
-			    	type : 'sectionstore'
-			    },
+			    store: this.config.store,
 			    onItemDisclosure: function(record, btn, index){
 			    	Ext.Msg.alert('Tap', 'Click');
 			    }
