@@ -24,4 +24,5 @@ Ext.define('MyApp.view.MainMenuPanel', {
 			}
         ]
     }
+
 });

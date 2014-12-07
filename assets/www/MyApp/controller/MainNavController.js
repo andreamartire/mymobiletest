@@ -82,8 +82,9 @@ Ext.define('MyApp.controller.MainNavController', {
     
     electionTap: function(button, index, target, record, e, eOpts ){
     	var sectionStore = Ext.getStore('sectionstore');
+    	sectionStore.clearFilter(true);
 	    sectionStore.load();
-	    sectionStore.filter({property: "electionId", value: record.data.id});
+	    sectionStore.filter("electionId", record.data.id);
 	       
     	button.up('navigationview').push({
             xtype: 'sectionList',
@@ -95,7 +96,8 @@ Ext.define('MyApp.controller.MainNavController', {
     addSectionTap: function(button, e, eOpts) {
     	button.up('navigationview').push({
             xtype: 'addSection',
-            title: 'Aggiungi Sezione'
+            title: 'Aggiungi Sezione',
+            electionId: button.getParent().config.electionId
         });
     },
     
@@ -106,7 +108,7 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var section = Ext.create('MyApp.model.SectionModel',{
 	         number: formData.number,
 	         note: formData.note,
-	         electionId: 1
+	         electionId: button.getParent().getParent().config.electionId
 	    });
 	     
 	    var errs = section.validate();
