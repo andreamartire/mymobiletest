@@ -16,11 +16,11 @@ Ext.define('MyApp.controller.MainNavController', {
             "addElection button": {
                 tap: 'saveElectionTap'
             },
-            "sectionList button": {
-                tap: 'addSectionTap'
+            "coalitionList button": {
+                tap: 'addCoalitionTap'
             },
-            "addSection button": {
-                tap: 'saveSectionTap'
+            "addCoalition button": {
+                tap: 'saveCoalitionTap'
             }
         }
     },
@@ -65,31 +65,30 @@ Ext.define('MyApp.controller.MainNavController', {
     
     electionTap: function(button, index, target, record, e, eOpts ){
     	button.up('navigationview').push({
-            xtype: 'sectionList',
-            title: 'Elezione',
+            xtype: 'coalitionList',
             electionId: record.data.id
         });
     },
     
-    addSectionTap: function(button, e, eOpts) {
+    addCoalitionTap: function(button, e, eOpts) {
     	button.up('navigationview').push({
-            xtype: 'addSection',
-            title: 'Aggiungi Sezione',
+            xtype: 'addCoalition',
             electionId: button.getParent().config.electionId
         });
     },
     
-    saveSectionTap: function(button, e, eOpts) {
+    saveCoalitionTap: function(button, e, eOpts) {
     	var form = button.getParent().getParent();
 	    var formData = form.getValues();
 	     
-	    var section = Ext.create('MyApp.model.SectionModel',{
-	         number: formData.number,
-	         note: formData.note,
+	    var coalition = Ext.create('MyApp.model.CoalitionModel',{
+	         name: formData.name,
+	         candidateName: formData.candidateName,
+	         candidateSurname: formData.candidateSurname,
 	         electionId: button.getParent().getParent().config.electionId
 	    });
 	     
-	    var errs = section.validate();
+	    var errs = coalition.validate();
 	    
 	    if (!errs.isValid()) {
 	    	var msg = '';
@@ -99,12 +98,12 @@ Ext.define('MyApp.controller.MainNavController', {
 	    	
 	    	Ext.Msg.alert('ERROR', msg);
 	    } else {
-	       var sectionStore = Ext.getStore('sectionstore');
-	       sectionStore.add(section);
-	       sectionStore.sync();
-	       sectionStore.load();
-	       Ext.Msg.alert('SUCCESS', 'Sezione salvata con Successo');
-	       //redirect to section list
+	       var coalitionStore = Ext.getStore('coalitionstore');
+	       coalitionStore.add(coalition);
+	       coalitionStore.sync();
+	       coalitionStore.load();
+	       Ext.Msg.alert('SUCCESS', 'Coalizione salvata con Successo');
+	       //redirect to coalition list
 	       button.up('navigationview').pop();
 	    }
     }

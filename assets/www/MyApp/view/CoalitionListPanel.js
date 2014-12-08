@@ -1,19 +1,19 @@
-Ext.define('MyApp.view.SectionListPanel', {
+Ext.define('MyApp.view.CoalitionListPanel', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.sectionList',
-    requires: ['MyApp.store.SectionStore'],
+    alias: 'widget.coalitionList',
+    requires: ['MyApp.store.CoalitionStore'],
     config: {
     	scrollable: false
     },
     initialize: function(){
     	var me = this;
     	
-    	var sectionStore = Ext.getStore('sectionstore');
-    	sectionStore.clearFilter();
-    	sectionStore.load();
+    	var coalitionStore = Ext.getStore('coalitionstore');
+    	coalitionStore.clearFilter();
+    	coalitionStore.load();
     	
     	var electionId = this.config.electionId;
-	    sectionStore.filterBy(function(record){
+    	coalitionStore.filterBy(function(record){
 	    	return record.data.electionId == electionId;
 	    });
     	
@@ -21,15 +21,15 @@ Ext.define('MyApp.view.SectionListPanel', {
 			{
 				xtype : 'list',
 				height: 300,
-				itemTpl: '<div class="contact">Sezione N&deg; {number} {note}</div>',
-			    store: sectionStore,
+				itemTpl: '<div class="contact">Coalizione: {name}</div>',
+			    store: coalitionStore,
 			    onItemDisclosure: function(record, btn, index){
 			    	Ext.Msg.alert('Tap', 'Click');
 			    }
 			},
 			{
 			    xtype: 'button',
-			    text: 'Aggiungi Sezione'
+			    text: 'Aggiungi Coalizione'
 			}
         ]);
     	
