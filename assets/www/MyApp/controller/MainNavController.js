@@ -18,8 +18,11 @@ Ext.define('MyApp.controller.MainNavController', {
                 tap: 'saveElectionTap'
             },
             //coalition
-            "coalitionList button": {
+            "coalitionList #addCoalitionId": {
                 tap: 'addCoalitionTap'
+            },
+            "coalitionList #startBallotId": {
+                tap: 'startBallotTap'
             },
             "addCoalition button": {
                 tap: 'saveCoalitionTap'
@@ -212,9 +215,16 @@ Ext.define('MyApp.controller.MainNavController', {
 	       candidateStore.add(candidate);
 	       candidateStore.sync();
 	       candidateStore.load();
-	       Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
-	       //redirect to election list
+	       Ext.Msg.alert('SUCCESS', 'Candidato salvato con Successo');
+	       //redirect to candidate list
 	       button.up('navigationview').pop();
 	    }
+    },
+    
+    startBallotTap: function(button, index, target, record, e, eOpts){
+    	button.up('navigationview').push({
+            xtype: 'ballotView',
+            electionId: button.getParent().config.electionId
+        });
     }
 });

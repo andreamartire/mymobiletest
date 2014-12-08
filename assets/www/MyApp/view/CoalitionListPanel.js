@@ -29,8 +29,14 @@ Ext.define('MyApp.view.CoalitionListPanel', {
 			    }
 			},
 			{
+				id: 'addCoalitionId',
 			    xtype: 'button',
 			    text: 'Aggiungi Coalizione'
+			},
+			{
+				id: 'startBallotId',
+			    xtype: 'button',
+			    text: 'Avvio Scrutinio'
 			}
         ]);
     	
