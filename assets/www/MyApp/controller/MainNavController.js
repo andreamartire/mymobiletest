@@ -34,6 +34,16 @@ Ext.define('MyApp.controller.MainNavController', {
             "addList button": {
                 tap: 'saveListTap'
             },
+            "listaList dataview": {
+            	itemtap : 'listTap'
+            },
+            //candidate
+            "candidateList button": {
+                tap: 'addCandidateTap'
+            },
+            "addCandidate button": {
+                tap: 'saveCandidateTap'
+            }
         }
     },
 
@@ -158,6 +168,52 @@ Ext.define('MyApp.controller.MainNavController', {
 	       listStore.load();
 	       Ext.Msg.alert('SUCCESS', 'Lista salvata con Successo');
 	       //redirect to lista list
+	       button.up('navigationview').pop();
+	    }
+    },
+    
+    listTap: function(button, index, target, record, e, eOpts){
+    	button.up('navigationview').push({
+            xtype: 'candidateList',
+            listId: record.data.id
+        });
+    },
+    
+    addCandidateTap: function(button, e, eOpts) {
+    	button.up('navigationview').push({
+            xtype: 'addCandidate',
+            listId: button.getParent().config.listId
+        });
+    },
+    
+    saveCandidateTap: function(button, e, eOpts) {
+    	var form = button.getParent().getParent();
+	    var formData = form.getValues();
+	     
+	    var candidate = Ext.create('MyApp.model.CandidateModel',{
+	         name: formData.name,
+	         surname: formData.surname,
+	         nickname: formData.nickname,
+	         birthDate: formData.birthDate,
+	         listId: formData.listId
+	    });
+	     
+	    var errs = candidate.validate();
+	     
+	    if (!errs.isValid()) {
+	    	var msg = '';
+	    	errs.each(function (err) {
+	    		msg += err.getField() + ' : ' + err.getMessage() + '';
+	    	});
+	    	
+	    	Ext.Msg.alert('ERROR', msg);
+	    } else {
+	       var candidateStore = Ext.getStore('candidatestore');
+	       candidateStore.add(candidate);
+	       candidateStore.sync();
+	       candidateStore.load();
+	       Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
+	       //redirect to election list
 	       button.up('navigationview').pop();
 	    }
     }

@@ -26,12 +26,14 @@
 				models: [
 					'MyApp.model.ElectionModel',
 					'MyApp.model.CoalitionModel',
-					'MyApp.model.ListModel'
+					'MyApp.model.ListModel',
+					'MyApp.model.CandidateModel'
 				],
 				stores: [
 					'MyApp.store.ElectionStore',
 					'MyApp.store.CoalitionStore',
-					'MyApp.store.ListStore'
+					'MyApp.store.ListStore',
+					'MyApp.store.CandidateStore'
 				],
 				views: [
 				    'MyApp.view.MainMenuPanel',
@@ -40,7 +42,9 @@
 				    'MyApp.view.CoalitionListPanel',
 				    'MyApp.view.AddCoalitionPanel',
 				    'MyApp.view.ListaListPanel',
-				    'MyApp.view.AddListPanel'
+				    'MyApp.view.AddListPanel',
+				    'MyApp.view.CandidateListPanel',
+				    'MyApp.view.AddCandidatePanel'
 				],
 				launch : function() {
 					Ext.create('MyApp.ElectionContainer', {
