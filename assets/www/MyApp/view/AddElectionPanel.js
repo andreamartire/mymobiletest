@@ -3,6 +3,7 @@ Ext.define('MyApp.view.AddElectionPanel', {
     alias: 'widget.addElection',
     config: {
     	fullscreen: true,
+    	title: 'Aggiungi Elezione',
         items: [{
             xtype: 'fieldset',
             items: [

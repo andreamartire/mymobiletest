@@ -2,7 +2,8 @@ Ext.define('MyApp.view.AddCoalitionPanel', {
     extend: 'Ext.form.Panel',
     alias: 'widget.addCoalition',
     config: {
-    	fullscreen: true
+    	fullscreen: true,
+    	title: 'Aggiungi Coalizione'
     },
     initialize: function(){
     	var me = this;
@@ -10,29 +11,26 @@ Ext.define('MyApp.view.AddCoalitionPanel', {
         me.setItems([{
             xtype: 'fieldset',
             items: [
-//                {
-//                    xtype: 'spinnerfield',
-//                    name : 'number',
-//                    label: 'Numero',
-//                    minValue: 1,
-//                    maxValue: 1000,
-//                    increment: 1,
-//                    cycle: true
-//                },
 				{
                     xtype: 'textfield',
                     name : 'name',
                     label: 'Coalizione'
                 },
                 {
-                    xtype: 'textfield',
-                    name : 'candidateName',
-                    label: 'Nome'
-                },
-                {
-                    xtype: 'textfield',
-                    name : 'candidateSurname',
-                    label: 'Cognome'
+                	xtype: 'fieldset',
+                	title: 'Candidato Presidente',
+                	items: [
+						{
+						    xtype: 'textfield',
+						    name : 'candidateName',
+						    label: 'Nome'
+						},
+						{
+						    xtype: 'textfield',
+						    name : 'candidateSurname',
+						    label: 'Cognome'
+						}
+					]
                 },
                 {
                     xtype: 'textfield',

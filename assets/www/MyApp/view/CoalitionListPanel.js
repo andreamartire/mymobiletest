@@ -3,7 +3,8 @@ Ext.define('MyApp.view.CoalitionListPanel', {
     alias: 'widget.coalitionList',
     requires: ['MyApp.store.CoalitionStore'],
     config: {
-    	scrollable: false
+    	scrollable: false,
+    	title: 'Coalizioni'
     },
     initialize: function(){
     	var me = this;
@@ -21,7 +22,7 @@ Ext.define('MyApp.view.CoalitionListPanel', {
 			{
 				xtype : 'list',
 				height: 300,
-				itemTpl: '<div class="contact">Coalizione: {name}</div>',
+				itemTpl: '<div class="contact">Coalizione: {name} - {candidateName} {candidateSurname}</div>',
 			    store: coalitionStore,
 			    onItemDisclosure: function(record, btn, index){
 			    	Ext.Msg.alert('Tap', 'Click');

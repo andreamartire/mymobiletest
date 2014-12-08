@@ -3,7 +3,8 @@ Ext.define('MyApp.view.ElectionListPanel', {
     alias: 'widget.electionList',
     requires: ['MyApp.store.ElectionStore'],
     config: {
-    	scrollable: false
+    	scrollable: false,
+    	title: 'Elezioni'
     },
     initialize: function(){
     	var me = this;

@@ -27,8 +27,7 @@ Ext.define('MyApp.controller.MainNavController', {
 
     addElectionTap: function(button, e, eOpts) {
     	button.up('navigationview').push({
-            xtype: 'addElection',
-            title: 'Aggiungi Elezione'
+            xtype: 'addElection'
         });
     },
     
