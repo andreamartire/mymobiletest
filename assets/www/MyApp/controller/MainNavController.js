@@ -7,6 +7,7 @@ Ext.define('MyApp.controller.MainNavController', {
 
     config: {
         control: {
+        	//election
             "electionList button": {
                 tap: 'addElectionTap'
             },
@@ -16,12 +17,23 @@ Ext.define('MyApp.controller.MainNavController', {
             "addElection button": {
                 tap: 'saveElectionTap'
             },
+            //coalition
             "coalitionList button": {
                 tap: 'addCoalitionTap'
             },
             "addCoalition button": {
                 tap: 'saveCoalitionTap'
-            }
+            },
+            "coalitionList dataview": {
+            	itemtap : 'coalitionTap'
+            },
+            //list
+            "listaList button": {
+                tap: 'addListTap'
+            },
+            "addList button": {
+                tap: 'saveListTap'
+            },
         }
     },
 
@@ -103,6 +115,49 @@ Ext.define('MyApp.controller.MainNavController', {
 	       coalitionStore.load();
 	       Ext.Msg.alert('SUCCESS', 'Coalizione salvata con Successo');
 	       //redirect to coalition list
+	       button.up('navigationview').pop();
+	    }
+    },
+    
+    coalitionTap: function(button, index, target, record, e, eOpts ){
+    	button.up('navigationview').push({
+            xtype: 'listaList',
+            coalitionId: record.data.id
+        });
+    },
+    
+    addListTap: function(button, e, eOpts) {
+    	button.up('navigationview').push({
+            xtype: 'addList',
+            coalitionId: button.getParent().config.coalitionId
+        });
+    },
+    
+    saveListTap: function(button, e, eOpts) {
+    	var form = button.getParent().getParent();
+	    var formData = form.getValues();
+	     
+	    var list = Ext.create('MyApp.model.ListModel',{
+	         name: formData.name,
+	         coalitionId: button.getParent().getParent().config.coalitionId
+	    });
+	     
+	    var errs = list.validate();
+	    
+	    if (!errs.isValid()) {
+	    	var msg = '';
+	    	errs.each(function (err) {
+	    		msg += err.getField() + ' : ' + err.getMessage() + '';
+	    	});
+	    	
+	    	Ext.Msg.alert('ERROR', msg);
+	    } else {
+	       var listStore = Ext.getStore('liststore');
+	       listStore.add(list);
+	       listStore.sync();
+	       listStore.load();
+	       Ext.Msg.alert('SUCCESS', 'Lista salvata con Successo');
+	       //redirect to lista list
 	       button.up('navigationview').pop();
 	    }
     }

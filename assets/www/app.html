@@ -25,18 +25,22 @@
 				],
 				models: [
 					'MyApp.model.ElectionModel',
-					'MyApp.model.CoalitionModel'
+					'MyApp.model.CoalitionModel',
+					'MyApp.model.ListModel'
 				],
 				stores: [
 					'MyApp.store.ElectionStore',
-					'MyApp.store.CoalitionStore'
+					'MyApp.store.CoalitionStore',
+					'MyApp.store.ListStore'
 				],
 				views: [
 				    'MyApp.view.MainMenuPanel',
 				    'MyApp.view.ElectionListPanel',
 				    'MyApp.view.AddElectionPanel',
 				    'MyApp.view.CoalitionListPanel',
-				    'MyApp.view.AddCoalitionPanel'
+				    'MyApp.view.AddCoalitionPanel',
+				    'MyApp.view.ListaListPanel',
+				    'MyApp.view.AddListPanel'
 				],
 				launch : function() {
 					Ext.create('MyApp.ElectionContainer', {

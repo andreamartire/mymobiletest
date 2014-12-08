@@ -25,7 +25,7 @@ Ext.define('MyApp.view.CoalitionListPanel', {
 				itemTpl: '<div class="contact">Coalizione: {name} - {candidateName} {candidateSurname}</div>',
 			    store: coalitionStore,
 			    onItemDisclosure: function(record, btn, index){
-			    	Ext.Msg.alert('Tap', 'Click');
+			    	record.fireEvent('itemtap', record, btn, index);
 			    }
 			},
 			{
