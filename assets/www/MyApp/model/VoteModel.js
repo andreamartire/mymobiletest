@@ -5,7 +5,7 @@ Ext.define('MyApp.model.VoteModel', {
 		    {name: 'id',   type: 'string'},
 		    {name: 'electionId', type: 'string'},
 		    {name: 'empty', type: 'boolean'},
-		    {name: 'valid', type: 'boolean'},
+		    {name: 'notValid', type: 'boolean'},
 		    {name: 'coalitionId', type: 'string'},
 		    {name: 'listId', type: 'string'},
 		    {name: 'candidateId', type: 'string'}

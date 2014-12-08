@@ -22,24 +22,39 @@ Ext.define('MyApp.view.BallotViewPanel', {
 			{
 				xtype : 'list',
 				height: 300,
-				itemTpl: '<div class="contact">{id} Co:{coalitionId} L:{listId} Ca:{candidateId}</div>',
+				itemTpl: '<div class="contact">' +
+							'<tpl if="notValid == true">' +
+								'Voto Nullo' +
+							'</tpl>' +
+							'<tpl if="empty == true">' +
+								'Scheda Bianca' +
+							'</tpl>' +
+							'<tpl if="empty == false && notValid == false">' +
+								'Voto Valido' +
+							'</tpl>' +
+						'</div>',
 			    store: voteStore,
 			    onItemDisclosure: function(record, btn, index){
 			    	record.fireEvent('itemtap', record, btn, index);
 			    }
 			},
 			{
-				xtype: 'fieldset',
+				xtype: 'segmentedbutton',
+				title: 'Scegli tipologia',
+				layout: {
+			        type: 'hbox',
+			        align: 'middle'
+			    },
 				items: [{
-					    xtype: 'button',
+						id: 'validVoteId',
 					    text: 'Voto Valido'
 					},
 					{
-					    xtype: 'button',
+						id: 'emptyVoteId',
 					    text: 'Bianca'
 					},
 					{
-					    xtype: 'button',
+						id: 'notValidVoteId',
 					    text: 'Nulla'
 					}
 				]

@@ -46,7 +46,17 @@ Ext.define('MyApp.controller.MainNavController', {
             },
             "addCandidate button": {
                 tap: 'saveCandidateTap'
-            }
+            },
+            //vote
+            "ballotView #validVoteId": {
+                tap: 'saveValidVoteTap'
+            },
+            "ballotView #notValidVoteId": {
+                tap: 'saveNotValidVoteTap'
+            },
+            "ballotView #emptyVoteId": {
+                tap: 'saveEmptyVoteTap'
+            },
         }
     },
 
@@ -66,25 +76,14 @@ Ext.define('MyApp.controller.MainNavController', {
 	         city: formData.city,
 	         note: formData.note
 	    });
-	     
-	    var errs = election.validate();
-	     
-	    if (!errs.isValid()) {
-	    	var msg = '';
-	    	errs.each(function (err) {
-	    		msg += err.getField() + ' : ' + err.getMessage() + '';
-	    	});
-	    	
-	    	Ext.Msg.alert('ERROR', msg);
-	    } else {
-	       var electionStore = Ext.getStore('electionstore');
-	       electionStore.add(election);
-	       electionStore.sync();
-	       electionStore.load();
-	       Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
-	       //redirect to election list
-	       button.up('navigationview').pop();
-	    }
+	    
+	    var electionStore = Ext.getStore('electionstore');
+	    electionStore.add(election);
+	    electionStore.sync();
+	    electionStore.load();
+	    Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
+	    //redirect to election list
+	    button.up('navigationview').pop();
     },
     
     electionTap: function(button, index, target, record, e, eOpts ){
@@ -111,25 +110,14 @@ Ext.define('MyApp.controller.MainNavController', {
 	         candidateSurname: formData.candidateSurname,
 	         electionId: button.getParent().getParent().config.electionId
 	    });
-	     
-	    var errs = coalition.validate();
 	    
-	    if (!errs.isValid()) {
-	    	var msg = '';
-	    	errs.each(function (err) {
-	    		msg += err.getField() + ' : ' + err.getMessage() + '';
-	    	});
-	    	
-	    	Ext.Msg.alert('ERROR', msg);
-	    } else {
-	       var coalitionStore = Ext.getStore('coalitionstore');
-	       coalitionStore.add(coalition);
-	       coalitionStore.sync();
-	       coalitionStore.load();
-	       Ext.Msg.alert('SUCCESS', 'Coalizione salvata con Successo');
-	       //redirect to coalition list
-	       button.up('navigationview').pop();
-	    }
+	    var coalitionStore = Ext.getStore('coalitionstore');
+	    coalitionStore.add(coalition);
+	    coalitionStore.sync();
+	    coalitionStore.load();
+	    Ext.Msg.alert('SUCCESS', 'Coalizione salvata con Successo');
+	    //redirect to coalition list
+	    button.up('navigationview').pop();
     },
     
     coalitionTap: function(button, index, target, record, e, eOpts ){
@@ -155,24 +143,13 @@ Ext.define('MyApp.controller.MainNavController', {
 	         coalitionId: button.getParent().getParent().config.coalitionId
 	    });
 	     
-	    var errs = list.validate();
-	    
-	    if (!errs.isValid()) {
-	    	var msg = '';
-	    	errs.each(function (err) {
-	    		msg += err.getField() + ' : ' + err.getMessage() + '';
-	    	});
-	    	
-	    	Ext.Msg.alert('ERROR', msg);
-	    } else {
-	       var listStore = Ext.getStore('liststore');
-	       listStore.add(list);
-	       listStore.sync();
-	       listStore.load();
-	       Ext.Msg.alert('SUCCESS', 'Lista salvata con Successo');
-	       //redirect to lista list
-	       button.up('navigationview').pop();
-	    }
+		var listStore = Ext.getStore('liststore');
+		listStore.add(list);
+		listStore.sync();
+		listStore.load();
+		Ext.Msg.alert('SUCCESS', 'Lista salvata con Successo');
+		//redirect to lista list
+		button.up('navigationview').pop();
     },
     
     listTap: function(button, index, target, record, e, eOpts){
@@ -200,25 +177,14 @@ Ext.define('MyApp.controller.MainNavController', {
 	         birthDate: formData.birthDate,
 	         listId: formData.listId
 	    });
-	     
-	    var errs = candidate.validate();
-	     
-	    if (!errs.isValid()) {
-	    	var msg = '';
-	    	errs.each(function (err) {
-	    		msg += err.getField() + ' : ' + err.getMessage() + '';
-	    	});
-	    	
-	    	Ext.Msg.alert('ERROR', msg);
-	    } else {
-	       var candidateStore = Ext.getStore('candidatestore');
-	       candidateStore.add(candidate);
-	       candidateStore.sync();
-	       candidateStore.load();
-	       Ext.Msg.alert('SUCCESS', 'Candidato salvato con Successo');
-	       //redirect to candidate list
-	       button.up('navigationview').pop();
-	    }
+	    
+       var candidateStore = Ext.getStore('candidatestore');
+       candidateStore.add(candidate);
+       candidateStore.sync();
+       candidateStore.load();
+       Ext.Msg.alert('SUCCESS', 'Candidato salvato con Successo');
+       //redirect to candidate list
+       button.up('navigationview').pop();
     },
     
     startBallotTap: function(button, index, target, record, e, eOpts){
@@ -226,5 +192,41 @@ Ext.define('MyApp.controller.MainNavController', {
             xtype: 'ballotView',
             electionId: button.getParent().config.electionId
         });
+    },
+    
+    saveValidVoteTap: function(button, e, eOpts) {
+    	Ext.Msg.alert('SUCCESS', 'Valido');
+    },
+
+    saveNotValidVoteTap: function(button, e, eOpts) {
+    	Ext.Msg.confirm('Conferma', 'Confermi Scheda Nulla?', function(btn){
+    		if(btn === 'yes'){
+		    	var vote = Ext.create('MyApp.model.VoteModel',{
+			         notValid: true,
+			         electionId: button.getParent().getParent().config.electionId
+			    });
+			    
+		    	var voteStore = Ext.getStore('votestore');
+		    	voteStore.add(vote);
+		    	voteStore.sync();
+		    	voteStore.load();
+    		}
+		});
+    },
+
+    saveEmptyVoteTap: function(button, e, eOpts) {
+    	Ext.Msg.confirm('Conferma', 'Confermi Scheda Bianca?', function(btn){
+    		if(btn === 'yes'){
+    			var vote = Ext.create('MyApp.model.VoteModel',{
+    		         empty: true,
+    		         electionId: button.getParent().getParent().config.electionId
+    		    });
+    		    
+    	    	var voteStore = Ext.getStore('votestore');
+    	    	voteStore.add(vote);
+    	    	voteStore.sync();
+    	    	voteStore.load();
+    		}
+    	});
     }
 });
