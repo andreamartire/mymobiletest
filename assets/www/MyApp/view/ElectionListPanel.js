@@ -1,6 +1,4 @@
-Ext.namespace('MyApp.ElectionListPanel');
-
-MyApp.ElectionListPanel = Ext.define('MyApp.view.ElectionListPanel', {
+Ext.define('MyApp.view.ElectionListPanel', {
     extend: 'Ext.form.Panel',
     alias: 'widget.electionList',
     requires: ['MyApp.store.ElectionStore'],
@@ -25,6 +23,11 @@ MyApp.ElectionListPanel = Ext.define('MyApp.view.ElectionListPanel', {
 			{
 			    xtype: 'button',
 			    text: 'Aggiungi Elezione'
+			},
+			{
+				id: 'creditsButtonId',
+			    xtype: 'button',
+			    text: 'Credits'
 			}
         ]);
 

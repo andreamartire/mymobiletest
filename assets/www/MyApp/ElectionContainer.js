@@ -9,7 +9,7 @@ Ext.define('MyApp.ElectionContainer', {
         useTitleForBackButtonText: true,
         items: [
             {
-                xtype: 'mainMenuPanel',
+                xtype: 'electionList',
                 title: 'ScrutinioLive'
             }
         ],
