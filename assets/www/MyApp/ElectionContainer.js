@@ -14,7 +14,16 @@ Ext.define('MyApp.ElectionContainer', {
             }
         ],
         navigationBar: {
-            ui: 'light'
+    	    ui: 'dark',//light
+    	    docked: 'top',
+    	    items: [{
+    	    	text: 'Credits',
+    	    	action: 'ui',
+    	    	align: 'right',
+    	    	handler: function(){
+    	    		Ext.Msg.alert('Credits', 'Copyright &copy; 2014, Andrea Martire. All Rights Reserved');
+    	    	}
+    	    }]
         }
     }
 

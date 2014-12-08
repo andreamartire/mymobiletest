@@ -23,11 +23,6 @@ Ext.define('MyApp.view.ElectionListPanel', {
 			{
 			    xtype: 'button',
 			    text: 'Aggiungi Elezione'
-			},
-			{
-				id: 'creditsButtonId',
-			    xtype: 'button',
-			    text: 'Credits'
 			}
         ]);
 

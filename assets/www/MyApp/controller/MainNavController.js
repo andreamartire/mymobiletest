@@ -7,12 +7,6 @@ Ext.define('MyApp.controller.MainNavController', {
 
     config: {
         control: {
-            "mainMenuPanel #electionButtonId": {
-                tap: 'electionListTap'
-            },
-            "mainMenuPanel #creditsButtonId": {
-                tap: 'creditsTap'
-            },
             "electionList button": {
                 tap: 'addElectionTap'
             },
@@ -29,17 +23,6 @@ Ext.define('MyApp.controller.MainNavController', {
                 tap: 'saveSectionTap'
             }
         }
-    },
-
-    electionListTap: function(button, e, eOpts) {
-        button.up('navigationview').push({
-            xtype: 'electionList',
-            title: 'Elezioni'
-        });
-    },
-    
-    creditsTap: function(button, e, eOpts) {
-    	Ext.Msg.alert('Credits', 'Copyright &copy; 2014, Andrea Martire. All Rights Reserved');
     },
 
     addElectionTap: function(button, e, eOpts) {
@@ -81,20 +64,10 @@ Ext.define('MyApp.controller.MainNavController', {
     },
     
     electionTap: function(button, index, target, record, e, eOpts ){
-    	var sectionStore = Ext.getStore('sectionstore');
-    	sectionStore.clearFilter();
-    	sectionStore.load();
-    	
-    	var electionId = record.data.id;
-	    sectionStore.filterBy(function(record){
-	    	return record.data.electionId == electionId;
-	    });
-	       
     	button.up('navigationview').push({
             xtype: 'sectionList',
             title: 'Elezione',
-            store: sectionStore,
-            electionId: electionId
+            electionId: record.data.id
         });
     },
     
