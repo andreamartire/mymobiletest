@@ -3,6 +3,7 @@ Ext.define('MyApp.model.VoteModel', {
 	config : {
 		fields : [
 		    {name: 'id',   type: 'string'},
+		    {name: 'electionId', type: 'string'},
 		    {name: 'empty', type: 'boolean'},
 		    {name: 'valid', type: 'boolean'},
 		    {name: 'coalitionId', type: 'string'},
