@@ -9,11 +9,6 @@ Ext.define('MyApp.store.ListStore', {
             type: 'localstorage',
             id: 'liststoreproxy'
         },
-        sorters: 'name',
-        grouper: {
-            groupFn: function(record) {
-                return record.get('name')[0];
-            }
-        },
+        sorters: 'name'
 	}
 });

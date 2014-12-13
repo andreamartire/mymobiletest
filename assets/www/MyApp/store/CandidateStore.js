@@ -9,11 +9,6 @@ Ext.define('MyApp.store.CandidateStore', {
             type: 'localstorage',
             id: 'candidatestoreproxy'
         },
-        sorters: 'id',
-        grouper: {
-            groupFn: function(record) {
-                return record.get('id')[0];
-            }
-        },
+        sorters: 'id'
 	}
 });

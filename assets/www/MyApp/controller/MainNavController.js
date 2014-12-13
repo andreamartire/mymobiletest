@@ -173,6 +173,7 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var candidate = Ext.create('MyApp.model.CandidateModel',{
 	         name: formData.name,
 	         surname: formData.surname,
+	         gender: formData.gender,
 	         nickname: formData.nickname,
 	         birthDate: formData.birthDate,
 	         listId: formData.listId

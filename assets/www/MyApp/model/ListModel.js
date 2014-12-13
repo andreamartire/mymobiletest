@@ -2,13 +2,12 @@ Ext.define('MyApp.model.ListModel', {
 	extend : 'Ext.data.Model',
 	config : {
 		fields : [
-		    {name: 'id',   type: 'string'},
+		    {name: 'id',   type: 'int'},
 		    {name: 'name', type: 'string'},
-		    {name: 'coalitionId', type: 'string'}
+		    {name: 'coalitionId', type: 'int'}
 		],
-		identifier: {
-			type: 'uuid', // needed to avoid console warnings!
-		},
+		idProperty: 'id',
+        identifier: 'sequential',
 	    proxy: {
 	      type: 'localstorage',
 	      id  : 'id'

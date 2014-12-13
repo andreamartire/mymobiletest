@@ -14,6 +14,6 @@ Ext.define('MyApp.store.VoteStore', {
             groupFn: function(record) {
                 return record.get('id')[0];
             }
-        },
+        }
 	}
 });

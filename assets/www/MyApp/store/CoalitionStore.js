@@ -9,11 +9,6 @@ Ext.define('MyApp.store.CoalitionStore', {
             type: 'localstorage',
             id: 'coalitionstoreproxy'
         },
-        sorters: 'name',
-        grouper: {
-            groupFn: function(record) {
-                return record.get('name')[0];
-            }
-        },
+        sorters: 'name'
 	}
 });

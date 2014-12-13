@@ -22,6 +22,20 @@ Ext.define('MyApp.view.AddCandidatePanel', {
                     label: 'Cognome'
                 },
                 {
+                    xtype: 'fieldset',
+                    items: [
+                        {
+                            xtype: 'selectfield',
+                            name : 'gender',
+                            label: 'Genere',
+                            options: [
+                                {text: 'Uomo',  value: 'M'},
+                                {text: 'Donna', value: 'F'}
+                            ]
+                        }
+                    ]
+                },
+                {
                 	xtype: 'datepickerfield',
                     name : 'birthDate',
                     label: 'Data Nascita',

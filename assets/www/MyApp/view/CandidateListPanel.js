@@ -22,7 +22,16 @@ Ext.define('MyApp.view.CandidateListPanel', {
 			{
 				xtype : 'list',
 				height: 300,
-				itemTpl: '<div class="contact">{name} {surname} detto {nickname}</div>',
+				itemTpl: '<div class="contact">{name} {surname} ' +
+							'<tpl if="nickname">' +
+								'<tpl if="gender == \'M\'">' +
+									'detto {nickname}' +
+								'</tpl>' +
+								'<tpl if="gender == \'F\'">' +
+									'detta {nickname}' +
+								'</tpl>' +
+							'</tpl>' +
+						'</div>',
 			    store: candidateStore,
 			    onItemDisclosure: function(record, btn, index){
 			    	record.fireEvent('itemtap', record, btn, index);

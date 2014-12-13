@@ -2,17 +2,16 @@ Ext.define('MyApp.model.VoteModel', {
 	extend : 'Ext.data.Model',
 	config : {
 		fields : [
-		    {name: 'id',   type: 'string'},
-		    {name: 'electionId', type: 'string'},
+		    {name: 'id',   type: 'int'},
+		    {name: 'electionId', type: 'int'},
 		    {name: 'empty', type: 'boolean'},
 		    {name: 'notValid', type: 'boolean'},
-		    {name: 'coalitionId', type: 'string'},
-		    {name: 'listId', type: 'string'},
-		    {name: 'candidateId', type: 'string'}
+		    {name: 'coalitionId', type: 'int'},
+		    {name: 'listId', type: 'int'},
+		    {name: 'candidateId', type: 'int'}
 		],
-		identifier: {
-			type: 'uuid', // needed to avoid console warnings!
-		},
+		idProperty: 'id',
+        identifier: 'sequential',
 	    proxy: {
 	      type: 'localstorage',
 	      id  : 'id'

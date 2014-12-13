@@ -22,7 +22,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
 			{
 				xtype : 'list',
 				height: 300,
-				itemTpl: '<div class="contact">' +
+				itemTpl: '<div class="contact">{id} ' +
 							'<tpl if="notValid == true">' +
 								'Voto Nullo' +
 							'</tpl>' +
