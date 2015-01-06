@@ -23,10 +23,7 @@ Ext.define('MyApp.view.CoalitionListPanel', {
 				xtype : 'list',
 				height: 300,
 				itemTpl: '<div class="contact">Coalizione: {name} - {candidateName} {candidateSurname}</div>',
-			    store: coalitionStore,
-			    onItemDisclosure: function(record, btn, index){
-			    	record.fireEvent('itemtap', record, btn, index);
-			    }
+			    store: coalitionStore
 			},
 			{
 				id: 'addCoalitionId',

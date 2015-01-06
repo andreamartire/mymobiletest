@@ -15,3 +15,5 @@ syntax: regexp
 ^bin/ScrutinioLive\.apk$
 syntax: regexp
 ^bin/resources\.ap_$
+syntax: regexp
+^component-dataview-example-master$

@@ -13,12 +13,31 @@ Ext.define('MyApp.view.ElectionListPanel', {
 			{
 				xtype : 'list',
 				height: 300,
-				itemTpl: '<div class="contact">{type} - {date:date("d/m/Y")} - {city}  - {note}</div>',
-			    store: {
+				itemTpl: '<div class="contact">{type}' +
+					'<tpl if="date">' +
+						' - {date:date("d/m/Y")}' +
+					'</tpl>' +
+					'<tpl if="city">' +
+						' - {city}' +
+					'</tpl>' +
+					'<tpl if="note">' +
+						' - {note}' +
+					'</tpl>' +
+					'<a href="#" ><img src="MyApp/img/edit.png" onclick="alert(\'edit\');"></img></a>' +
+					'<a href="#" onclick="alert(\'delete\');"><img src="MyApp/img/delete.png"</img></a>' +
+				'</div>',
+				store: {
 			    	type : 'electionstore'
 			    },
-			    onItemDisclosure: function(record, btn, index){
-			    	record.fireEvent('itemtap',record, btn, index);
+			    listeners: {
+			    	itemtouchend: function(el, index, target, record, e, eOpts){
+			    		var nodeName = e.target.nodeName.toUpperCase();
+			    		
+			    		if(nodeName == 'IMG'){
+			    			//stop event because user clicked an action button
+			    			e.stopEvent();
+			    		}
+			    	}
 			    }
 			},
 			{
