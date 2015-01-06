@@ -1,10 +1,13 @@
-Ext.define('MyApp.view.AddElectionPanel', {
+Ext.define('MyApp.view.ElectionDetailPanel', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.addElection',
+    alias: 'widget.electionDetail',
     config: {
-    	fullscreen: true,
-    	title: 'Aggiungi Elezione',
-        items: [{
+    	fullscreen: true
+    },
+    initialize: function(){
+    	var me = this;
+    	
+    	me.setItems([{
             xtype: 'fieldset',
             items: [
                 {
@@ -54,10 +57,25 @@ Ext.define('MyApp.view.AddElectionPanel', {
                     label: 'Note'
                 },
                 {
+                    xtype: 'textfield',
+                    name : 'id',
+                    label: 'Election Id'
+                },
+                {
                     xtype: 'button',
     			    text: 'Salva'
                 }
             ]
-        }]
+        }]);
+    	
+    	if(me.config.electionId){
+    		var electionStore = Ext.getStore('electionstore');
+	    	var election = electionStore.getById(me.config.electionId);
+        	if(election != null){
+        		me.setValues(election.data);
+        	}
+    	}
+    	
+    	me.callParent(arguments);
     }
 });

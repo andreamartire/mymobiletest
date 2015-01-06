@@ -12,9 +12,11 @@ Ext.define('MyApp.controller.MainNavController', {
                 tap: 'addElectionTap'
             },
             "electionList dataview": {
-            	itemtap : 'electionTap'
+            	itemtap : 'electionTap',
+            	edit: 'editElection',
+            	remove: 'removeElection'
             },
-            "addElection button": {
+            "electionDetail button": {
                 tap: 'saveElectionTap'
             },
             //coalition
@@ -56,13 +58,14 @@ Ext.define('MyApp.controller.MainNavController', {
             },
             "ballotView #emptyVoteId": {
                 tap: 'saveEmptyVoteTap'
-            },
+            }
         }
     },
 
     addElectionTap: function(button, e, eOpts) {
     	button.up('navigationview').push({
-            xtype: 'addElection'
+            xtype: 'electionDetail',
+        	title: 'Aggiungi Elezione'
         });
     },
     
@@ -71,6 +74,7 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var formData = form.getValues();
 	     
 	    var election = Ext.create('MyApp.model.ElectionModel',{
+	    	 id: formData.id,
 	         date: formData.date,
 	         type: formData.type,
 	         city: formData.city,
@@ -91,6 +95,25 @@ Ext.define('MyApp.controller.MainNavController', {
             xtype: 'coalitionList',
             electionId: record.data.id
         });
+    },
+    
+    editElection: function(element, electionId){
+    	element.up('navigationview').push({
+            xtype: 'electionDetail',
+        	title: 'Modifica Elezione',
+        	electionId: electionId
+        });
+    },
+    
+    removeElection: function(element, electionId){
+    	Ext.Msg.confirm('Cancellazione', 'Vuoi rimuovere l\'elezione?', function(btn){
+    		if(btn === 'yes'){    		    
+    	    	var electionStore = Ext.getStore('electionstore');
+    	    	var election = electionStore.getById(electionId);
+    	    	electionStore.remove(election);
+    	    	electionStore.sync();
+    		}
+    	});
     },
     
     addCoalitionTap: function(button, e, eOpts) {

@@ -3,7 +3,7 @@ Ext.define('MyApp.model.ElectionModel', {
 	config : {
 		fields : [ 
 		    {name: 'id',   type: 'int'},
-		    {name: 'date', type: 'string'},
+		    {name: 'date', type: Ext.data.Types.DATE},
 		    {name: 'type', type: 'string'},
 		    {name: 'city', type: 'string'},
 		    {name: 'note', type: 'string'}
