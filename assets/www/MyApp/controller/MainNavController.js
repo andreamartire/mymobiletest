@@ -26,11 +26,13 @@ Ext.define('MyApp.controller.MainNavController', {
             "coalitionList #startBallotId": {
                 tap: 'startBallotTap'
             },
-            "addCoalition button": {
+            "coalitionDetail button": {
                 tap: 'saveCoalitionTap'
             },
             "coalitionList dataview": {
-            	itemtap : 'coalitionTap'
+            	itemtap : 'coalitionTap',
+            	edit: 'editCoalition',
+            	remove: 'removeCoalition'
             },
             //list
             "listaList button": {
@@ -118,7 +120,8 @@ Ext.define('MyApp.controller.MainNavController', {
     
     addCoalitionTap: function(button, e, eOpts) {
     	button.up('navigationview').push({
-            xtype: 'addCoalition',
+            xtype: 'coalitionDetail',
+            title: 'Aggiungi Elezione',
             electionId: button.getParent().config.electionId
         });
     },
@@ -128,10 +131,11 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var formData = form.getValues();
 	     
 	    var coalition = Ext.create('MyApp.model.CoalitionModel',{
+	    	 id: formData.id,
 	         name: formData.name,
 	         candidateName: formData.candidateName,
 	         candidateSurname: formData.candidateSurname,
-	         electionId: button.getParent().getParent().config.electionId
+	         electionId: formData.electionId
 	    });
 	    
 	    var coalitionStore = Ext.getStore('coalitionstore');
@@ -148,6 +152,25 @@ Ext.define('MyApp.controller.MainNavController', {
             xtype: 'listaList',
             coalitionId: record.data.id
         });
+    },
+    
+    editCoalition: function(element, coalitionId){
+    	element.up('navigationview').push({
+            xtype: 'coalitionDetail',
+        	title: 'Modifica Coalizione',
+        	coalitionId: coalitionId
+        });
+    },
+    
+    removeCoalition: function(element, coalitionId){
+    	Ext.Msg.confirm('Cancellazione', 'Vuoi rimuovere la coalizione?', function(btn){
+    		if(btn === 'yes'){    		    
+    	    	var coalitionStore = Ext.getStore('coalitionstore');
+    	    	var coalition = coalitionStore.getById(coalitionId);
+    	    	coalitionStore.remove(coalition);
+    	    	coalitionStore.sync();
+    		}
+    	});
     },
     
     addListTap: function(button, e, eOpts) {

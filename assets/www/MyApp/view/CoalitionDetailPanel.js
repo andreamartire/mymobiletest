@@ -1,9 +1,8 @@
-Ext.define('MyApp.view.AddCoalitionPanel', {
+Ext.define('MyApp.view.CoalitionDetailPanel', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.addCoalition',
+    alias: 'widget.coalitionDetail',
     config: {
-    	fullscreen: true,
-    	title: 'Aggiungi Coalizione'
+    	fullscreen: true
     },
     initialize: function(){
     	var me = this;
@@ -39,11 +38,24 @@ Ext.define('MyApp.view.AddCoalitionPanel', {
                     value: me.config.electionId
                 },
                 {
+                    xtype: 'textfield',
+                    name : 'id',
+                    label: 'Coalition Id'
+                },
+                {
                     xtype: 'button',
     			    text: 'Salva'
                 }
             ]
         }]);
+        
+        if(me.config.coalitionId){
+    		var coalitionStore = Ext.getStore('coalitionstore');
+	    	var coalition = coalitionStore.getById(me.config.coalitionId);
+        	if(coalition != null){
+        		me.setValues(coalition.data);
+        	}
+    	}
         
         me.callParent(arguments);
     }
