@@ -38,17 +38,23 @@ Ext.define('MyApp.controller.MainNavController', {
             "listaList button": {
                 tap: 'addListTap'
             },
-            "addList button": {
+            "listDetail button": {
                 tap: 'saveListTap'
             },
             "listaList dataview": {
-            	itemtap : 'listTap'
+            	itemtap : 'listTap',
+            	edit: 'editList',
+            	remove: 'removeList'
             },
             //candidate
             "candidateList button": {
-                tap: 'addCandidateTap'
+            	tap: 'addCandidateTap'
             },
-            "addCandidate button": {
+            "candidateList dataview": {
+            	edit: 'editCandidate',
+            	remove: 'removeCandidate'
+            },
+            "candidateDetail button": {
                 tap: 'saveCandidateTap'
             },
             //vote
@@ -76,11 +82,11 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var formData = form.getValues();
 	     
 	    var election = Ext.create('MyApp.model.ElectionModel',{
-	    	 id: formData.id,
-	         date: formData.date,
-	         type: formData.type,
-	         city: formData.city,
-	         note: formData.note
+	    	id: formData.id,
+	        date: formData.date,
+	        type: formData.type,
+	        city: formData.city,
+	        note: formData.note
 	    });
 	    
 	    var electionStore = Ext.getStore('electionstore');
@@ -131,11 +137,11 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var formData = form.getValues();
 	     
 	    var coalition = Ext.create('MyApp.model.CoalitionModel',{
-	    	 id: formData.id,
-	         name: formData.name,
-	         candidateName: formData.candidateName,
-	         candidateSurname: formData.candidateSurname,
-	         electionId: formData.electionId
+	    	id: formData.id,
+	        name: formData.name,
+	        candidateName: formData.candidateName,
+	        candidateSurname: formData.candidateSurname,
+	        electionId: formData.electionId
 	    });
 	    
 	    var coalitionStore = Ext.getStore('coalitionstore');
@@ -175,8 +181,9 @@ Ext.define('MyApp.controller.MainNavController', {
     
     addListTap: function(button, e, eOpts) {
     	button.up('navigationview').push({
-            xtype: 'addList',
-            coalitionId: button.getParent().config.coalitionId
+            xtype: 'listDetail',
+            coalitionId: button.getParent().config.coalitionId,
+            title: 'Aggiungi Lista'
         });
     },
     
@@ -185,8 +192,9 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var formData = form.getValues();
 	     
 	    var list = Ext.create('MyApp.model.ListModel',{
-	         name: formData.name,
-	         coalitionId: button.getParent().getParent().config.coalitionId
+	    	id: formData.id,
+	        name: formData.name,
+	        coalitionId: formData.coalitionId
 	    });
 	     
 		var listStore = Ext.getStore('liststore');
@@ -205,10 +213,30 @@ Ext.define('MyApp.controller.MainNavController', {
         });
     },
     
+    editList: function(element, listId){
+    	element.up('navigationview').push({
+            xtype: 'listDetail',
+        	title: 'Modifica Lista',
+        	listId: listId
+        });
+    },
+    
+    removeList: function(element, listId){
+    	Ext.Msg.confirm('Cancellazione', 'Vuoi rimuovere la lista?', function(btn){
+    		if(btn === 'yes'){    		    
+    	    	var listStore = Ext.getStore('liststore');
+    	    	var list = listStore.getById(listId);
+    	    	listStore.remove(list);
+    	    	listStore.sync();
+    		}
+    	});
+    },
+    
     addCandidateTap: function(button, e, eOpts) {
     	button.up('navigationview').push({
-            xtype: 'addCandidate',
-            listId: button.getParent().config.listId
+            xtype: 'candidateDetail',
+            listId: button.getParent().config.listId,
+            title: 'Aggiungi Candidato'
         });
     },
     
@@ -217,12 +245,13 @@ Ext.define('MyApp.controller.MainNavController', {
 	    var formData = form.getValues();
 	     
 	    var candidate = Ext.create('MyApp.model.CandidateModel',{
-	         name: formData.name,
-	         surname: formData.surname,
-	         gender: formData.gender,
-	         nickname: formData.nickname,
-	         birthDate: formData.birthDate,
-	         listId: formData.listId
+	    	id: formData.id,
+	        name: formData.name,
+	        surname: formData.surname,
+	        gender: formData.gender,
+	        nickname: formData.nickname,
+	        birthDate: formData.birthDate,
+	        listId: formData.listId
 	    });
 	    
        var candidateStore = Ext.getStore('candidatestore');
@@ -232,6 +261,25 @@ Ext.define('MyApp.controller.MainNavController', {
        Ext.Msg.alert('SUCCESS', 'Candidato salvato con Successo');
        //redirect to candidate list
        button.up('navigationview').pop();
+    },
+    
+    editCandidate: function(element, candidateId){
+    	element.up('navigationview').push({
+            xtype: 'candidateDetail',
+        	title: 'Modifica Candidato',
+        	candidateId: candidateId
+        });
+    },
+    
+    removeCandidate: function(element, candidateId){
+    	Ext.Msg.confirm('Cancellazione', 'Vuoi rimuovere il candidato?', function(btn){
+    		if(btn === 'yes'){    		    
+    	    	var candidateStore = Ext.getStore('candidatestore');
+    	    	var candidate = candidateStore.getById(candidateId);
+    	    	candidateStore.remove(candidate);
+    	    	candidateStore.sync();
+    		}
+    	});
     },
     
     startBallotTap: function(button, index, target, record, e, eOpts){

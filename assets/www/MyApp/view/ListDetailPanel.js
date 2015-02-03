@@ -1,9 +1,8 @@
-Ext.define('MyApp.view.AddListPanel', {
+Ext.define('MyApp.view.ListDetailPanel', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.addList',
+    alias: 'widget.listDetail',
     config: {
-    	fullscreen: true,
-    	title: 'Aggiungi Lista'
+    	fullscreen: true
     },
     initialize: function(){
     	var me = this;
@@ -23,11 +22,24 @@ Ext.define('MyApp.view.AddListPanel', {
                     value: me.config.coalitionId
                 },
                 {
+                    xtype: 'textfield',
+                    name : 'id',
+                    label: 'Lista Id'
+                },
+                {
                     xtype: 'button',
     			    text: 'Salva'
                 }
             ]
         }]);
+        
+        if(me.config.listId){
+    		var listStore = Ext.getStore('liststore');
+	    	var list = listStore.getById(me.config.listId);
+        	if(list != null){
+        		me.setValues(list.data);
+        	}
+    	}
         
         me.callParent(arguments);
     }

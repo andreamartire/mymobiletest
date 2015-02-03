@@ -31,10 +31,25 @@ Ext.define('MyApp.view.CandidateListPanel', {
 									'detta {nickname}' +
 								'</tpl>' +
 							'</tpl>' +
+							'<img type="edit" src="MyApp/img/edit.png"></img>' +
+							'<img type="remove" src="MyApp/img/delete.png"</img>' +
 						'</div>',
 			    store: candidateStore,
-			    onItemDisclosure: function(record, btn, index){
-			    	record.fireEvent('itemtap', record, btn, index);
+			    listeners: {
+			    	itemtouchend: function(element, index, target, record, e, eOpts){
+			    		var nodeName = e.target.nodeName.toUpperCase();
+			    		
+			    		if(nodeName == 'IMG'){
+			    			//stop event because user clicked an action button
+			    			e.stopEvent();
+			    			
+				    		var buttonType = e.target.getAttribute("type");
+				    		var electionId = record.data.id;
+			    			
+				    		//fire event
+				    		element.fireEvent(buttonType, element, electionId);
+			    		}
+			    	}
 			    }
 			},
 			{

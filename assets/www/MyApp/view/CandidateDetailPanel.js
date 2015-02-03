@@ -1,9 +1,8 @@
-Ext.define('MyApp.view.AddCandidatePanel', {
+Ext.define('MyApp.view.CandidateDetailPanel', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.addCandidate',
+    alias: 'widget.candidateDetail',
     config: {
-    	fullscreen: true,
-    	title: 'Aggiungi Candidato'
+    	fullscreen: true
     },
     initialize: function(){
     	var me = this;
@@ -56,11 +55,24 @@ Ext.define('MyApp.view.AddCandidatePanel', {
                     value: me.config.listId
                 },
                 {
+                    xtype: 'textfield',
+                    name : 'id',
+                    label: 'Candidate Id'
+                },
+                {
                     xtype: 'button',
     			    text: 'Salva'
                 }
             ]
         }]);
+        
+        if(me.config.candidateId){
+    		var candidateStore = Ext.getStore('candidatestore');
+	    	var candidate = candidateStore.getById(me.config.candidateId);
+        	if(candidate != null){
+        		me.setValues(candidate.data);
+        	}
+    	}
         
         me.callParent(arguments);
     }
