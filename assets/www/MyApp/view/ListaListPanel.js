@@ -18,14 +18,22 @@ Ext.define('MyApp.view.ListaListPanel', {
 	    	return record.data.coalitionId == coalitionId;
 	    });
     	
+    	//configuro pulsanti di default
+    	var buttons = '<img type="edit" src="MyApp/img/edit.png"></img>' +
+		  			  '<img type="remove" src="MyApp/img/delete.png"</img>';
+    	
+    	if(MyApp.config.ballotMode){
+    		//sostituisco i pulsanti con il pulsante del voto
+    		buttons = '<img type="vote" src="MyApp/img/ballot.png"</img>';
+    	}
+    	
     	me.setItems([
 			{
 				xtype : 'list',
 				height: 300,
 				itemTpl: 
 					'<div class="contact">Lista: {name}' +
-						'<img type="edit" src="MyApp/img/edit.png"></img>' +
-						'<img type="remove" src="MyApp/img/delete.png"</img>' +
+						buttons +
 					+'</div>',
 			    store: listStore,
 			    listeners: {
@@ -47,7 +55,8 @@ Ext.define('MyApp.view.ListaListPanel', {
 			},
 			{
 			    xtype: 'button',
-			    text: 'Aggiungi Lista'
+			    text: 'Aggiungi Lista',
+			    hidden: MyApp.config.ballotMode
 			}
         ]);
     	

@@ -9,6 +9,18 @@ Ext.define('MyApp.view.ElectionListPanel', {
     initialize: function(){
     	var me = this;
     	
+    	//reset ballot mode
+    	MyApp.config.ballotMode = false;
+    	
+    	//configuro pulsanti di default
+    	var buttons = '<img type="edit" src="MyApp/img/edit.png"></img>' +
+		  			  '<img type="remove" src="MyApp/img/delete.png"</img>';
+    	
+    	if(MyApp.config.ballotMode){
+    		//sostituisco i pulsanti con il pulsante del voto
+    		buttons = '<img type="vote" src="MyApp/img/ballot.png"</img>';
+    	}
+    	
     	me.setItems([
 			{
 				xtype : 'list',
@@ -23,8 +35,7 @@ Ext.define('MyApp.view.ElectionListPanel', {
 					'<tpl if="note">' +
 						' - {note}' +
 					'</tpl>' +
-					'<img type="edit" src="MyApp/img/edit.png"></img>' +
-					'<img type="remove" src="MyApp/img/delete.png"</img>' +
+					buttons +
 				'</div>',
 				store: {
 			    	type : 'electionstore'

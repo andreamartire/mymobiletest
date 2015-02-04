@@ -32,7 +32,8 @@ Ext.define('MyApp.controller.MainNavController', {
             "coalitionList dataview": {
             	itemtap : 'coalitionTap',
             	edit: 'editCoalition',
-            	remove: 'removeCoalition'
+            	remove: 'removeCoalition',
+            	vote: 'voteCoalition'
             },
             //list
             "listaList button": {
@@ -44,7 +45,8 @@ Ext.define('MyApp.controller.MainNavController', {
             "listaList dataview": {
             	itemtap : 'listTap',
             	edit: 'editList',
-            	remove: 'removeList'
+            	remove: 'removeList',
+            	vote: 'voteList'
             },
             //candidate
             "candidateList button": {
@@ -52,12 +54,16 @@ Ext.define('MyApp.controller.MainNavController', {
             },
             "candidateList dataview": {
             	edit: 'editCandidate',
-            	remove: 'removeCandidate'
+            	remove: 'removeCandidate',
+            	vote: 'voteCandidate'
             },
             "candidateDetail button": {
                 tap: 'saveCandidateTap'
             },
             //vote
+            "ballotView #voteListId": {
+                remove: 'removeVote'
+            },
             "ballotView #validVoteId": {
                 tap: 'saveValidVoteTap'
             },
@@ -95,7 +101,7 @@ Ext.define('MyApp.controller.MainNavController', {
 	    electionStore.load();
 	    Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
 	    //redirect to election list
-	    button.up('navigationview').pop();
+	    button.up('navigationview').pop(1);
     },
     
     electionTap: function(button, index, target, record, e, eOpts ){
@@ -150,7 +156,7 @@ Ext.define('MyApp.controller.MainNavController', {
 	    coalitionStore.load();
 	    Ext.Msg.alert('SUCCESS', 'Coalizione salvata con Successo');
 	    //redirect to coalition list
-	    button.up('navigationview').pop();
+	    button.up('navigationview').pop(1);
     },
     
     coalitionTap: function(button, index, target, record, e, eOpts ){
@@ -203,7 +209,7 @@ Ext.define('MyApp.controller.MainNavController', {
 		listStore.load();
 		Ext.Msg.alert('SUCCESS', 'Lista salvata con Successo');
 		//redirect to lista list
-		button.up('navigationview').pop();
+		button.up('navigationview').pop(1);
     },
     
     listTap: function(button, index, target, record, e, eOpts){
@@ -260,7 +266,7 @@ Ext.define('MyApp.controller.MainNavController', {
        candidateStore.load();
        Ext.Msg.alert('SUCCESS', 'Candidato salvato con Successo');
        //redirect to candidate list
-       button.up('navigationview').pop();
+       button.up('navigationview').pop(1);
     },
     
     editCandidate: function(element, candidateId){
@@ -282,6 +288,44 @@ Ext.define('MyApp.controller.MainNavController', {
     	});
     },
     
+    removeVote: function(element, voteId){
+    	var me = this;
+    	Ext.Msg.confirm('Cancellazione', 'Vuoi rimuovere il voto?', function(btn){
+    		if(btn === 'yes'){    		    
+    	    	var voteStore = Ext.getStore('votestore');
+    	    	var vote = voteStore.getById(voteId);
+    	    	voteStore.remove(vote);
+    	    	voteStore.sync();
+    	    	
+    	    	//decrementa votanti
+    	    	var numVoters = Ext.getCmp('voterCounterId').getValue();
+    	    	Ext.getCmp('voterCounterId').setValue(numVoters-1);
+    	    	
+    	    	var voteStore = Ext.getStore('votestore');
+    	    	var vote = voteStore.getById(voteId);
+    	    	
+    	    	if(vote.empty){
+    	    		//decrementa schede bianche
+    	        	var numEmpty = Ext.getCmp('emptyCounterId').getValue();
+    	        	Ext.getCmp('emptyCounterId').setValue(numEmpty-1);
+    	    	}
+    	    	else if(vote.notValid){
+    	    		//decrementa schede nulle
+    	    		var numNull = Ext.getCmp('nulldId').getValue();
+    		    	Ext.getCmp('nullCounterId').setValue(numNull-1);
+    	    	}
+    	    	else {
+    	    		//decrementa voti validi
+    		    	var numValid = Ext.getCmp('validVoteCounterId').getValue();
+    		    	Ext.getCmp('validVoteCounterId').setValue(numValid-1);
+    	    	}
+    	    	
+    	    	//aggiorna totale votanti
+    	    	me.refreshVoters();
+    		}
+    	});
+    },
+    
     startBallotTap: function(button, index, target, record, e, eOpts){
     	button.up('navigationview').push({
             xtype: 'ballotView',
@@ -289,11 +333,115 @@ Ext.define('MyApp.controller.MainNavController', {
         });
     },
     
-    saveValidVoteTap: function(button, e, eOpts) {
-    	Ext.Msg.alert('SUCCESS', 'Valido');
+    saveValidVoteTap: function(button, e, eOpts) {    	
+    	button.up('navigationview').push({
+            xtype: 'coalitionList',
+            title: 'Seleziona Preferenza, Lista o Presidente',
+            electionId: button.getParent().getParent().config.electionId
+        });
+    },
+    
+    voteCoalition: function(element, coalitionId){
+    	var me = this;
+    	Ext.Msg.confirm('Votazione', 'Confermi il voto alla coalizione?', function(btn){
+    		if(btn === 'yes'){    		    
+    	    	var coalitionStore = Ext.getStore('coalitionstore');
+    	    	var coalition = coalitionStore.getById(coalitionId);
+    	    	
+    	    	var vote = Ext.create('MyApp.model.VoteModel',{
+			         coalitionId: coalitionId,
+			         electionId: coalition.data.electionId,
+			         empty: false,
+			         notValid: false
+			    });
+			    
+		    	var voteStore = Ext.getStore('votestore');
+		    	voteStore.add(vote);
+		    	voteStore.sync();
+		    	voteStore.load();
+		    	
+		    	//incrementa voti validi 
+		    	var numValid = Ext.getCmp('validVoteCounterId').getValue();
+		    	Ext.getCmp('validVoteCounterId').setValue(numValid+1);
+
+		    	me.refreshVoters();
+    		}
+    		//redirect to vote list
+    	    element.up('navigationview').pop(1);
+    	});
+    },
+    
+    voteList: function(element, listId){
+    	var me = this;
+    	Ext.Msg.confirm('Votazione', 'Confermi il voto alla lista?', function(btn){
+    		if(btn === 'yes'){
+    	    	var listStore = Ext.getStore('liststore');
+    	    	var list = listStore.getById(listId);
+    	    	
+    	    	var coalitionStore = Ext.getStore('coalitionstore');
+    	    	var coalition = coalitionStore.getById(list.data.coalitionId);
+    	    	
+    	    	var vote = Ext.create('MyApp.model.VoteModel',{
+    	    		listId: listId,
+			        electionId: coalition.data.electionId,
+			        empty: false,
+			        notValid: false
+			    });
+			    
+		    	var voteStore = Ext.getStore('votestore');
+		    	voteStore.add(vote);
+		    	voteStore.sync();
+		    	voteStore.load();
+		    	
+		    	//incrementa voti validi
+		    	var numValid = Ext.getCmp('validVoteCounterId').getValue();
+		    	Ext.getCmp('validVoteCounterId').setValue(numValid+1);
+
+		    	me.refreshVoters();
+    		}
+    		//redirect to vote list
+    	    element.up('navigationview').pop(2);
+    	});
     },
 
+    voteCandidate: function(element, candidateId){
+    	var me = this;
+    	Ext.Msg.confirm('Votazione', 'Confermi il voto al candidato?', function(btn){
+    		if(btn === 'yes'){    		    
+    	    	var candidateStore = Ext.getStore('candidatestore');
+    	    	var candidate = candidateStore.getById(candidateId);
+    	    	
+    	    	var listStore = Ext.getStore('liststore');
+    	    	var list = listStore.getById(candidate.data.listId);
+    	    	
+    	    	var coalitionStore = Ext.getStore('coalitionstore');
+    	    	var coalition = coalitionStore.getById(list.data.coalitionId);
+    	    	
+    	    	var vote = Ext.create('MyApp.model.VoteModel',{
+    	    		candidateId: candidateId,
+			        electionId: coalition.data.electionId,
+			        empty: false,
+			        notValid: false
+			    });
+			    
+		    	var voteStore = Ext.getStore('votestore');
+		    	voteStore.add(vote);
+		    	voteStore.sync();
+		    	voteStore.load();
+		    	
+		    	//incrementa voti validi
+		    	var numValid = Ext.getCmp('validVoteCounterId').getValue();
+		    	Ext.getCmp('validVoteCounterId').setValue(numValid+1);
+
+		    	me.refreshVoters();
+    		}
+    		//redirect to vote list
+    	    element.up('navigationview').pop(3);
+    	});
+    },
+    
     saveNotValidVoteTap: function(button, e, eOpts) {
+    	var me = this;
     	Ext.Msg.confirm('Conferma', 'Confermi Scheda Nulla?', function(btn){
     		if(btn === 'yes'){
 		    	var vote = Ext.create('MyApp.model.VoteModel',{
@@ -305,11 +453,18 @@ Ext.define('MyApp.controller.MainNavController', {
 		    	voteStore.add(vote);
 		    	voteStore.sync();
 		    	voteStore.load();
+		    	
+		    	//incrementa voti nulli
+		    	var numNull = Ext.getCmp('nullCounterId').getValue();
+		    	Ext.getCmp('nullCounterId').setValue(numNull+1);
+		    	
+		    	me.refreshVoters();
     		}
 		});
     },
 
     saveEmptyVoteTap: function(button, e, eOpts) {
+    	var me = this;
     	Ext.Msg.confirm('Conferma', 'Confermi Scheda Bianca?', function(btn){
     		if(btn === 'yes'){
     			var vote = Ext.create('MyApp.model.VoteModel',{
@@ -321,7 +476,27 @@ Ext.define('MyApp.controller.MainNavController', {
     	    	voteStore.add(vote);
     	    	voteStore.sync();
     	    	voteStore.load();
+		    	
+    	    	//incrementa schede bianche
+		    	var numEmpty = Ext.getCmp('emptyCounterId').getValue();
+		    	Ext.getCmp('emptyCounterId').setValue(numEmpty+1);
+		    	
+		    	me.refreshVoters();
     		}
     	});
+    },
+    
+    refreshVoters: function(){
+    	//get schede bianche
+    	var numEmpty = Ext.getCmp('emptyCounterId').getValue();
+    	
+    	//get voti validi
+    	var numValid = Ext.getCmp('validVoteCounterId').getValue();
+    	
+    	//get voti nulli
+    	var numNull = Ext.getCmp('nullCounterId').getValue();
+    	
+    	//aggiorna totale votanti
+    	Ext.getCmp('voterCounterId').setValue(numEmpty + numValid + numNull);
     }
 });

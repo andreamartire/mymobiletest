@@ -7,6 +7,7 @@ Ext.define('MyApp.ElectionContainer', {
 
     config: {
         useTitleForBackButtonText: true,
+		height: '500px',
         items: [
             {
                 xtype: 'electionList',

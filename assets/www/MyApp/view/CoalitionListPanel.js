@@ -19,14 +19,22 @@ Ext.define('MyApp.view.CoalitionListPanel', {
 	    	return record.data.electionId == electionId;
 	    });
     	
+    	//configuro pulsanti di default
+    	var buttons = '<img type="edit" src="MyApp/img/edit.png"></img>' +
+		  			  '<img type="remove" src="MyApp/img/delete.png"</img>';
+    	
+    	if(MyApp.config.ballotMode){
+    		//sostituisco i pulsanti con il pulsante del voto
+    		buttons = '<img type="vote" src="MyApp/img/ballot.png"</img>';
+    	}
+    	
     	me.setItems([
 			{
 				xtype : 'list',
 				height: 300,
 				itemTpl: '<div class="contact">' +
 						'Coalizione: {name} - {candidateName} {candidateSurname}' +
-						'<img type="edit" src="MyApp/img/edit.png"></img>' +
-						'<img type="remove" src="MyApp/img/delete.png"</img>' +
+						buttons +
 					'</div>',
 			    store: coalitionStore,
 			    listeners: {
@@ -49,12 +57,14 @@ Ext.define('MyApp.view.CoalitionListPanel', {
 			{
 				id: 'addCoalitionId',
 			    xtype: 'button',
-			    text: 'Aggiungi Coalizione'
+			    text: 'Aggiungi Coalizione',
+			    hidden: MyApp.config.ballotMode
 			},
 			{
 				id: 'startBallotId',
 			    xtype: 'button',
-			    text: 'Avvio Scrutinio'
+			    text: 'Avvio Scrutinio',
+			    hidden: MyApp.config.ballotMode
 			}
         ]);
     	
