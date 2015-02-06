@@ -22,7 +22,7 @@ Ext.define('MyApp.view.ListaListPanel', {
     	var buttons = '<img type="edit" src="MyApp/img/edit.png"></img>' +
 		  			  '<img type="remove" src="MyApp/img/delete.png"></img>';
     	
-    	if(MyApp.config.ballotMode){
+    	if(MyApp.ballotMode){
     		//sostituisco i pulsanti con il pulsante del voto
     		buttons = '<img type="vote" src="MyApp/img/ballot.png"></img>';
     	}
@@ -56,7 +56,7 @@ Ext.define('MyApp.view.ListaListPanel', {
 			{
 			    xtype: 'button',
 			    text: 'Aggiungi Lista',
-			    hidden: MyApp.config.ballotMode
+			    hidden: MyApp.ballotMode
 			}
         ]);
     	

@@ -10,9 +10,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
     	var me = this;
     	
     	//enable ballot mode
-    	MyApp.config.ballotMode = true;
-    	
-    	me.precalculateRelations();
+    	MyApp.ballotMode = true;
     	
     	var voteStore = Ext.getStore('votestore');
     	voteStore.clearFilter();
@@ -39,8 +37,6 @@ Ext.define('MyApp.view.BallotViewPanel', {
 	    	return record.data.electionId == electionId;
 	    });
     	
-    	me.calculateStatistics();
-    	
     	me.generateCoalitionList();
     	
     	var numVoters = numEmpty + numValid + numNotValid;
@@ -56,8 +52,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
 					    },
 					    items: [
 					        {
-					        	xtype: 'numberfield',
-			                    minValue: 0,
+					        	xtype: 'textfield',
 					            flex: 1,
 					            id: 'voterCounterId',
 					            label: 'Votanti',
@@ -65,8 +60,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
 					            value: numVoters
 					        },
 					        {
-					        	xtype: 'numberfield',
-			                    minValue: 0,
+					        	xtype: 'textfield',
 					            flex: 1,
 					            id: 'validVoteCounterId',
 					            label: 'Valide',
@@ -82,8 +76,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
 					    },
 					    items: [
 					        {
-					        	xtype: 'numberfield',
-			                    minValue: 0,
+					        	xtype: 'textfield',
 					            flex: 2,
 					            id: 'emptyCounterId',
 					            label: 'Bianche',
@@ -91,8 +84,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
 					            value: numEmpty
 					        },
 					        {
-					        	xtype: 'numberfield',
-			                    minValue: 0,
+					        	xtype: 'textfield',
 					            flex: 2,
 					            id: 'nullCounterId',
 					            label: 'Nulle',
@@ -176,47 +168,13 @@ Ext.define('MyApp.view.BallotViewPanel', {
     	
     	me.callParent(arguments);
     },
-    precalculateRelations: function(){
-    	var me = this;
-    	me.listToCoalition = {};
-    	me.candidateToCoalition = {};
-    	
-    	var listStore = Ext.getStore('liststore');
-    	listStore.each(function(record){
-    		var listId = record.data.id;
-    		var coalitionId = record.data.coalitionId;
-    		me.listToCoalition[listId] = coalitionId;
-    	});
-    	
-    	var candidateStore = Ext.getStore('candidatestore');
-    	candidateStore.each(function(record){
-    		var candidateId = record.data.id;
-    		var listId = record.data.listId;
-    		me.candidateToCoalition[candidateId] = me.listToCoalition[listId];
-    	});
-    },
-    calculateStatistics: function(){
-    	var me = this;
-    	//reset statistiche
-    	me.coalitionVoteCounters = {};
-    	
-    	var voteStore = Ext.getStore('votestore');
-    	voteStore.each(function(record){
-    		var coalitionId = record.data.coalitionId;
-    		
-    		if(coalitionId){
-    			if(me.coalitionVoteCounters[coalitionId]){
-        			me.coalitionVoteCounters[coalitionId]++;
-        		}else{
-        			me.coalitionVoteCounters[coalitionId] = 1;
-        		}
-    		}
-    	});
-    },
     generateCoalitionList: function(){
     	var me = this;
     	//generazione lista coalizioni
     	me.coalitionVoteList = [];
+    	
+    	//get data
+    	me.coalitionVoteCounters = MyApp.ElectionContainer.coalitionVoteCounters;
     	
     	var coalitionStore = Ext.getStore('coalitionstore');
     	coalitionStore.each(function(record){
@@ -231,16 +189,6 @@ Ext.define('MyApp.view.BallotViewPanel', {
     			readOnly: true,
     			value: me.coalitionVoteCounters[record.data.id]
     		});
-    	});
-    },
-    refreshCoalitionList: function(){
-    	var me = this;
-    	//aggiornamento voti coalizioni
-    	
-    	me.calculateStatistics();
-    	var coalitionStore = Ext.getStore('coalitionstore');
-    	coalitionStore.each(function(record){
-    		Ext.getCmp('coalitionVoteId' + record.data.id).setValue(me.coalitionVoteCounters[record.data.id]);
     	});
     }
 });

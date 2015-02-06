@@ -12,15 +12,16 @@
 		<script type='text/javascript'>
 			Ext.Loader.setConfig({
 				enabled : true,
+				ballotMode: false,
 				paths : {
 					MyApp : 'MyApp'
 				}
 			});
 			
-			var MyApp = {};
-			MyApp.config = {};
-			//reset ballot mode
-	    	MyApp.config.ballotMode = false;
+// 			var MyApp = {};
+// 			MyApp.config = {};
+// 			//reset ballot mode
+// 	    	MyApp.config.ballotMode = false;
 			
 			Ext.require([ 'MyApp.ElectionContainer']);
 			
