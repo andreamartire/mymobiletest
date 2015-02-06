@@ -102,6 +102,8 @@ Ext.define('MyApp.controller.MainNavController', {
 	    Ext.Msg.alert('SUCCESS', 'Elezione salvata con Successo');
 	    //redirect to election list
 	    button.up('navigationview').pop(1);
+	    //reset ballot mode
+	    MyApp.config.ballotMode = false;
     },
     
     electionTap: function(button, index, target, record, e, eOpts ){
@@ -157,6 +159,8 @@ Ext.define('MyApp.controller.MainNavController', {
 	    Ext.Msg.alert('SUCCESS', 'Coalizione salvata con Successo');
 	    //redirect to coalition list
 	    button.up('navigationview').pop(1);
+	    //reset ballot mode
+	    MyApp.config.ballotMode = false;
     },
     
     coalitionTap: function(button, index, target, record, e, eOpts ){
@@ -210,6 +214,8 @@ Ext.define('MyApp.controller.MainNavController', {
 		Ext.Msg.alert('SUCCESS', 'Lista salvata con Successo');
 		//redirect to lista list
 		button.up('navigationview').pop(1);
+	    //reset ballot mode
+	    MyApp.config.ballotMode = false;
     },
     
     listTap: function(button, index, target, record, e, eOpts){
@@ -267,6 +273,8 @@ Ext.define('MyApp.controller.MainNavController', {
        Ext.Msg.alert('SUCCESS', 'Candidato salvato con Successo');
        //redirect to candidate list
        button.up('navigationview').pop(1);
+	    //reset ballot mode
+	    MyApp.config.ballotMode = false;
     },
     
     editCandidate: function(element, candidateId){
@@ -294,31 +302,29 @@ Ext.define('MyApp.controller.MainNavController', {
     		if(btn === 'yes'){    		    
     	    	var voteStore = Ext.getStore('votestore');
     	    	var vote = voteStore.getById(voteId);
+    	    	
+    	    	if(vote){
+    	    		if(vote.data.empty){
+        	    		//decrementa schede bianche
+        	        	var numEmpty = Ext.getCmp('emptyCounterId').getValue();
+        	        	Ext.getCmp('emptyCounterId').setValue(numEmpty-1);
+        	    	}
+        	    	else if(vote.data.notValid){
+        	    		//decrementa schede nulle
+        	    		var numNull = Ext.getCmp('nullCounterId').getValue();
+        		    	Ext.getCmp('nullCounterId').setValue(numNull-1);
+        	    	}
+        	    	else {
+        	    		//decrementa voti validi
+        		    	var numValid = Ext.getCmp('validVoteCounterId').getValue();
+        		    	Ext.getCmp('validVoteCounterId').setValue(numValid-1);
+        	    	}
+    	    	}else{
+    	    		Ext.Msg.alert('ERROR', 'Errore nella rimozione del voto');
+    	    	}
+    	    	
     	    	voteStore.remove(vote);
     	    	voteStore.sync();
-    	    	
-    	    	//decrementa votanti
-    	    	var numVoters = Ext.getCmp('voterCounterId').getValue();
-    	    	Ext.getCmp('voterCounterId').setValue(numVoters-1);
-    	    	
-    	    	var voteStore = Ext.getStore('votestore');
-    	    	var vote = voteStore.getById(voteId);
-    	    	
-    	    	if(vote.empty){
-    	    		//decrementa schede bianche
-    	        	var numEmpty = Ext.getCmp('emptyCounterId').getValue();
-    	        	Ext.getCmp('emptyCounterId').setValue(numEmpty-1);
-    	    	}
-    	    	else if(vote.notValid){
-    	    		//decrementa schede nulle
-    	    		var numNull = Ext.getCmp('nulldId').getValue();
-    		    	Ext.getCmp('nullCounterId').setValue(numNull-1);
-    	    	}
-    	    	else {
-    	    		//decrementa voti validi
-    		    	var numValid = Ext.getCmp('validVoteCounterId').getValue();
-    		    	Ext.getCmp('validVoteCounterId').setValue(numValid-1);
-    	    	}
     	    	
     	    	//aggiorna totale votanti
     	    	me.refreshVoters();
@@ -368,6 +374,8 @@ Ext.define('MyApp.controller.MainNavController', {
     		}
     		//redirect to vote list
     	    element.up('navigationview').pop(1);
+    	    //reset ballot mode
+    	    MyApp.config.ballotMode = false;
     	});
     },
     
@@ -384,6 +392,7 @@ Ext.define('MyApp.controller.MainNavController', {
     	    	var vote = Ext.create('MyApp.model.VoteModel',{
     	    		listId: listId,
 			        electionId: coalition.data.electionId,
+			        coalitionId: coalition.data.id,
 			        empty: false,
 			        notValid: false
 			    });
@@ -401,6 +410,8 @@ Ext.define('MyApp.controller.MainNavController', {
     		}
     		//redirect to vote list
     	    element.up('navigationview').pop(2);
+    	    //reset ballot mode
+    	    MyApp.config.ballotMode = false;
     	});
     },
 
@@ -420,6 +431,8 @@ Ext.define('MyApp.controller.MainNavController', {
     	    	var vote = Ext.create('MyApp.model.VoteModel',{
     	    		candidateId: candidateId,
 			        electionId: coalition.data.electionId,
+			        coalitionId: coalition.data.id,
+			        listId: list.data.id,
 			        empty: false,
 			        notValid: false
 			    });
@@ -437,6 +450,8 @@ Ext.define('MyApp.controller.MainNavController', {
     		}
     		//redirect to vote list
     	    element.up('navigationview').pop(3);
+    	    //reset ballot mode
+    	    MyApp.config.ballotMode = false;
     	});
     },
     

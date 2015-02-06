@@ -21,11 +21,11 @@ Ext.define('MyApp.view.CoalitionListPanel', {
     	
     	//configuro pulsanti di default
     	var buttons = '<img type="edit" src="MyApp/img/edit.png"></img>' +
-		  			  '<img type="remove" src="MyApp/img/delete.png"</img>';
+		  			  '<img type="remove" src="MyApp/img/delete.png"></img>';
     	
     	if(MyApp.config.ballotMode){
     		//sostituisco i pulsanti con il pulsante del voto
-    		buttons = '<img type="vote" src="MyApp/img/ballot.png"</img>';
+    		buttons = '<img type="vote" src="MyApp/img/ballot.png"></img>';
     	}
     	
     	me.setItems([
@@ -33,7 +33,7 @@ Ext.define('MyApp.view.CoalitionListPanel', {
 				xtype : 'list',
 				height: 300,
 				itemTpl: '<div class="contact">' +
-						'Coalizione: {name} - {candidateName} {candidateSurname}' +
+						'{name} - {candidateName} {candidateSurname} ' +
 						buttons +
 					'</div>',
 			    store: coalitionStore,
