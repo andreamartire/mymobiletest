@@ -328,6 +328,7 @@ Ext.define('MyApp.controller.MainNavController', {
     	    	
     	    	//aggiorna totale votanti
     	    	me.refreshVoters();
+		    	me.refreshCoalitionList();
     		}
     	});
     },
@@ -520,21 +521,31 @@ Ext.define('MyApp.controller.MainNavController', {
     	var percValid = (numValid*100)/total;
     	var percNull = (numNull*100)/total;
     	
-    	Ext.getCmp('emptyCounterId').setValue(numEmpty + ' ('+ percEmpty.toFixed(1) +'%)');
-    	Ext.getCmp('validVoteCounterId').setValue(numValid + ' ('+ percValid.toFixed(1) +'%)');
-    	Ext.getCmp('nullCounterId').setValue(numNull + ' ('+ percNull.toFixed(1)+'%)');
+    	Ext.getCmp('emptyCounterId').setValue(numEmpty);//+ ' ('+ percEmpty.toFixed(1) +'%)');
+    	Ext.getCmp('validVoteCounterId').setValue(numValid);// + ' ('+ percValid.toFixed(1) +'%)');
+    	Ext.getCmp('nullCounterId').setValue(numNull);// + ' ('+ percNull.toFixed(1)+'%)');
     },
     
     precalculateRelations: function(){
     	var me = MyApp.ElectionContainer;
     	me.listToCoalition = {};
-    	me.candidateToCoalition = {};
+    	
+    	me.coalitionLabels = {};
+    	me.listLabels = {};
+    	me.candidateLabels = {};
+    	
+    	var coalitionStore = Ext.getStore('coalitionstore');
+    	coalitionStore.each(function(record){
+    		var coalitionId = record.data.id;
+    		me.coalitionLabels[coalitionId] = record.data.name;
+    	});
     	
     	var listStore = Ext.getStore('liststore');
     	listStore.each(function(record){
     		var listId = record.data.id;
     		var coalitionId = record.data.coalitionId;
     		me.listToCoalition[listId] = coalitionId;
+    		me.listLabels[listId] = record.data.name;
     	});
     	
     	var candidateStore = Ext.getStore('candidatestore');
@@ -542,6 +553,7 @@ Ext.define('MyApp.controller.MainNavController', {
     		var candidateId = record.data.id;
     		var listId = record.data.listId;
     		me.candidateToCoalition[candidateId] = me.listToCoalition[listId];
+    		me.candidateLabels[listId] = record.data.name + " " + record.data.surname;
     	});
     },
     

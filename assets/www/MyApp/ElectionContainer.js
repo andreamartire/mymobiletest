@@ -22,7 +22,7 @@ Ext.define('MyApp.ElectionContainer', {
     	    	action: 'ui',
     	    	align: 'right',
     	    	handler: function(){
-    	    		Ext.Msg.alert('Credits', 'Copyright &copy; 2014, Andrea Martire. All Rights Reserved');
+    	    		Ext.Msg.alert('Credits', 'Copyright &copy; 2015, Andrea Martire. All Rights Reserved');
     	    	}
     	    }]
         }

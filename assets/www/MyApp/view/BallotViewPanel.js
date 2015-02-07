@@ -52,7 +52,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
 					    },
 					    items: [
 					        {
-					        	xtype: 'textfield',
+					        	xtype: 'numberfield',
 					            flex: 1,
 					            id: 'voterCounterId',
 					            label: 'Votanti',
@@ -60,7 +60,7 @@ Ext.define('MyApp.view.BallotViewPanel', {
 					            value: numVoters
 					        },
 					        {
-					        	xtype: 'textfield',
+					        	xtype: 'numberfield',
 					            flex: 1,
 					            id: 'validVoteCounterId',
 					            label: 'Valide',
@@ -76,16 +76,16 @@ Ext.define('MyApp.view.BallotViewPanel', {
 					    },
 					    items: [
 					        {
-					        	xtype: 'textfield',
-					            flex: 2,
+					        	xtype: 'numberfield',
+					            flex: 1,
 					            id: 'emptyCounterId',
 					            label: 'Bianche',
 					            readOnly: true,
 					            value: numEmpty
 					        },
 					        {
-					        	xtype: 'textfield',
-					            flex: 2,
+					        	xtype: 'numberfield',
+					            flex: 1,
 					            id: 'nullCounterId',
 					            label: 'Nulle',
 					            readOnly: true,
@@ -114,12 +114,12 @@ Ext.define('MyApp.view.BallotViewPanel', {
 							'</tpl>' +
 							'<tpl if="empty == false && notValid == false">' +
 								'<tpl if="candidateId != undefined">' +
-									'Voto al Candidato {candidateId}' +
+									'Voto al Candidato {candidateLabel}' +
 								'</tpl>' +
-								'<tpl if="listId != undefined">' +
+								'<tpl if="listId != undefined && candidateId == undefined">' +
 									'Voto alla Lista {listId}' +
 								'</tpl>' +
-								'<tpl if="coalitionId != undefined">' +
+								'<tpl if="coalitionId != undefined && listId == undefined">' +
 									'Voto alla Coalizione {coalitionId}' +
 								'</tpl>' +
 							'</tpl>' +
