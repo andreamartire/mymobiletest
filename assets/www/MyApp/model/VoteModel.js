@@ -12,6 +12,9 @@ Ext.define('MyApp.model.VoteModel', {
 		    {name: 'candidateLabel', type: 'string', 
 		    	convert: function (value, record) {
 		    		var candidateId = record.get('candidateId');
+		    		if(!MyApp.ElectionContainer.candidateLabels){
+		    			return 'ooo';
+		    		}
 		    		return MyApp.ElectionContainer.candidateLabels[candidateId];
 			    }
 		    }

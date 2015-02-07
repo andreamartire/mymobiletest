@@ -13,15 +13,13 @@
 			Ext.Loader.setConfig({
 				enabled : true,
 				ballotMode: false,
+				//disableCaching: false,
 				paths : {
 					MyApp : 'MyApp'
 				}
 			});
 			
-// 			var MyApp = {};
-// 			MyApp.config = {};
-// 			//reset ballot mode
-// 	    	MyApp.config.ballotMode = false;
+			Ext.Ajax.disableCaching = false;
 			
 			Ext.require([ 'MyApp.ElectionContainer']);
 			

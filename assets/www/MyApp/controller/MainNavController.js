@@ -529,6 +529,7 @@ Ext.define('MyApp.controller.MainNavController', {
     precalculateRelations: function(){
     	var me = MyApp.ElectionContainer;
     	me.listToCoalition = {};
+    	me.candidateToCoalition = {};
     	
     	me.coalitionLabels = {};
     	me.listLabels = {};
